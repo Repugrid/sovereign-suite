@@ -149,7 +149,7 @@
                 <div class="text-gray-400 mb-2"># Get current health status</div>
                 <div class="text-green-400 mb-4">GET /api/v1/servers/{id}/status</div>
                 <div class="text-gray-400 mb-2"># Try it right now:</div>
-                <div class="text-yellow-400">curl http://37.27.189.23:9081/api/v1/servers | jq</div>
+                <div class="text-yellow-400">curl /api/v1/servers | jq</div>
             </div>
         </div>
     </section>
@@ -169,7 +169,7 @@
                         Copy
                     </button>
                 </div>
-                <code id="install-cmd" class="text-green-400 font-mono text-lg block">curl -sSL http://37.27.189.23:9080/install/nodewatch.sh | bash</code>
+                <code id="install-cmd" class="text-green-400 font-mono text-lg block">curl -sSL /install/nodewatch.sh | bash</code>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
@@ -230,15 +230,17 @@
                 </div>
             </div>
             <div class="mt-4 text-center text-xs text-gray-600">
-                <a href="https://github.com/Repugrid/sovereign-suite" class="hover:text-gray-400">GitHub</a>
+                <a href="https://github.com/Repugrid/sovereign-suite" target="_blank" class="hover:text-gray-400">GitHub</a>
                 <span class="mx-2">|</span>
-                API: <a href="http://37.27.189.23:9081/docs" class="hover:text-gray-400">Documentation</a>
+                API: <a href="/api/v1/servers" target="_blank" class="hover:text-gray-400">Live Endpoint</a>
+                <span class="mx-2">|</span>
+                <a href="mailto:hello@repugrid.com" class="hover:text-gray-400">Contact</a>
             </div>
         </div>
     </footer>
 
     <script>
-        const API = 'http://37.27.189.23:9081';
+        const API = '';
         let chart;
 
         feather.replace();
