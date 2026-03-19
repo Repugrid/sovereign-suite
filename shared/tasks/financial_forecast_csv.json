@@ -1,0 +1,12 @@
+{
+  "task_id": "financial_forecast_csv",
+  "role": "coder",
+  "instruction": "Create a comprehensive 36-month financial forecast for Sovereign-Node-Watch as a CSV file. Requirements: Include columns for Month (1-36), New Customers, Total Customers, Churned Customers, MRR (Monthly Recurring Revenue in EUR), ARR (Annualized), ARPU (Average Revenue Per User), CAC (Customer Acquisition Cost), LTV (Lifetime Value), Gross Margin %, Operating Expenses, Net Revenue, Cumulative Revenue, Cumulative Costs, Break-even indicator (Y/N). Use these assumptions: Starting: 0 customers, Month 1 launch. Growth: 15 new customers/month initially, growing 8% month-over-month. Churn: 5% monthly. ARPU: \u20ac25/month (blended across tiers). CAC: \u20ac45 per customer. Gross Margin: 85%. Monthly OpEx: \u20ac8,000 (infrastructure + support). Show break-even point clearly. The CSV should be professionally formatted and ready for investor review. Save as shared/results/DATA_ROOM/05_FINANCIAL_FORECAST.csv",
+  "context": {
+    "product": "Sovereign-Node-Watch",
+    "target_market": "Hetzner users",
+    "business_model": "SaaS subscription"
+  },
+  "created_at": "2026-03-19T10:49:47.713802+00:00",
+  "status": "pending"
+}

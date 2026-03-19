@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign Suite — AI-Powered Infrastructure Management | RepuGrid</title>
+    <meta name="description" content="AI-built server monitoring and backup suite for Hetzner infrastructure. Node-Watch + Vault. From €49/mo.">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛</text></svg>">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'deep-blue': '#1e3a5f'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+        .card-hover { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+        .card-hover:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(59,130,246,0.15); }
+    </style>
+</head>
+<body class="bg-gray-900 text-white min-h-screen">
+    <!-- Header -->
+    <header class="bg-gradient-to-r from-deep-blue to-gray-900 py-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-blue-400 text-sm font-semibold tracking-widest uppercase mb-4">A RepuGrid Company</p>
+            <h1 class="text-5xl md:text-6xl font-bold mb-4">Sovereign Suite</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">AI-Powered Infrastructure Management for Hetzner. Monitor. Backup. Recover. Automatically.</p>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-6 py-16">
+        <!-- Product Cards -->
+        <div class="grid md:grid-cols-2 gap-8 mb-16 fade-in">
+            <!-- Node-Watch -->
+            <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700 card-hover">
+                <div class="flex items-center mb-6">
+                    <div class="w-14 h-14 bg-blue-500/20 rounded-xl flex items-center justify-center mr-4">
+                        <span class="text-3xl">📊</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Node-Watch</h3>
+                        <p class="text-blue-400 text-sm">AI Server Monitoring</p>
+                    </div>
+                </div>
+                <ul class="text-gray-300 space-y-2 mb-6">
+                    <li>✓ Predictive anomaly detection (30min advance warning)</li>
+                    <li>✓ Auto-remediation for common failures</li>
+                    <li>✓ Hetzner-native cost optimization (save 20-40%)</li>
+                </ul>
+                <div class="flex items-center justify-between">
+                    <span class="text-2xl font-bold text-green-400">From €29/mo</span>
+                    <a href="/suite/node-watch/" class="bg-blue-600 hover:bg-blue-500 px-6 py-2.5 rounded-lg font-semibold transition-colors">
+                        Learn More →
+                    </a>
+                </div>
+            </div>
+
+            <!-- Vault -->
+            <div class="bg-gray-800 rounded-2xl p-8 border border-gray-700 card-hover">
+                <div class="flex items-center mb-6">
+                    <div class="w-14 h-14 bg-emerald-500/20 rounded-xl flex items-center justify-center mr-4">
+                        <span class="text-3xl">🔒</span>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold">Vault</h3>
+                        <p class="text-emerald-400 text-sm">AI Backup & Recovery</p>
+                    </div>
+                </div>
+                <ul class="text-gray-300 space-y-2 mb-6">
+                    <li>✓ One-click disaster recovery (< 90 seconds)</li>
+                    <li>✓ AI-scheduled backups (learns your patterns)</li>
+                    <li>✓ End-to-end encryption, zero-knowledge</li>
+                </ul>
+                <div class="flex items-center justify-between">
+                    <span class="text-2xl font-bold text-green-400">From €39/mo</span>
+                    <a href="/suite/vault/" class="bg-emerald-600 hover:bg-emerald-500 px-6 py-2.5 rounded-lg font-semibold transition-colors">
+                        Learn More →
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bundle Banner -->
+        <div class="bg-gradient-to-r from-deep-blue to-blue-600 rounded-2xl p-10 text-center mb-16 fade-in">
+            <p class="text-blue-200 text-sm uppercase tracking-widest mb-2">Best Value</p>
+            <h2 class="text-3xl font-bold mb-2">Complete Infrastructure Suite</h2>
+            <p class="text-xl text-gray-200 mb-4">Node-Watch + Vault — Monitor, Backup & Auto-Recover</p>
+            <p class="text-5xl font-bold text-yellow-400 mb-1">€49<span class="text-lg text-gray-300">/mo</span></p>
+            <p class="text-gray-300 mb-2">Instead of €68 separately — save 30%</p>
+            <p class="text-gray-400 text-sm mb-6">Professional: €129/mo · Enterprise: €249/mo</p>
+            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_xclick&amp;business=aristech%40eigentuemertermin.com&amp;item_name=Sovereign+Suite+Starter+Bundle&amp;amount=49&amp;currency_code=EUR&amp;return=https%3A%2F%2Frepugrid.com%2Fsuite%2F%3Fpayment%3Dsuccess" target="_blank"
+               class="inline-block bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold px-8 py-3 rounded-lg text-lg transition-colors">
+                Get Started — Pay with PayPal
+            </a>
+        </div>
+
+        <!-- Trust Section -->
+        <div class="text-center mb-16 fade-in">
+            <h2 class="text-3xl font-bold mb-6">Built by AI. Trusted by Engineers.</h2>
+            <p class="text-lg text-gray-400 max-w-3xl mx-auto mb-8">
+                Sovereign Suite combines cutting-edge AI with battle-tested infrastructure practices.
+                Designed for teams of 1-50 who need enterprise-grade reliability without enterprise complexity.
+            </p>
+            <div class="flex justify-center gap-8 text-gray-400">
+                <div class="text-center"><p class="text-3xl font-bold text-white">85%</p><p class="text-sm">Gross Margin</p></div>
+                <div class="text-center"><p class="text-3xl font-bold text-white">30min</p><p class="text-sm">Advance Warning</p></div>
+                <div class="text-center"><p class="text-3xl font-bold text-white">< 90s</p><p class="text-sm">Recovery Time</p></div>
+                <div class="text-center"><p class="text-3xl font-bold text-white">GDPR</p><p class="text-sm">Compliant</p></div>
+            </div>
+        </div>
+
+        <!-- For Partners -->
+        <div class="bg-gray-800 rounded-2xl p-10 text-center border border-gray-700 fade-in">
+            <p class="text-yellow-400 text-sm uppercase tracking-widest mb-2">For Strategic Partners</p>
+            <h2 class="text-2xl font-bold mb-4">White-Label & Licensing Available</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-6">
+                Hosting providers, MSPs, and infrastructure companies can license Sovereign Suite
+                as a value-add for their customers. Complete technical documentation,
+                API integration guides, and dedicated onboarding included.
+            </p>
+            <div class="flex justify-center gap-4">
+                <a href="/suite/data-room/" class="bg-gray-700 hover:bg-gray-600 px-6 py-2.5 rounded-lg font-semibold transition-colors">
+                    🔒 Partner Documentation
+                </a>
+                <a href="mailto:hello@repugrid.com?subject=Sovereign%20Suite%20Partnership%20Inquiry"
+                   class="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold px-6 py-2.5 rounded-lg transition-colors">
+                    Contact Partnership Team
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-deep-blue py-8 mt-16">
+        <div class="container mx-auto px-6 text-center">
+            <p class="text-gray-400 mb-2">© 2026 Sovereign Suite — A <a href="https://repugrid.com" class="text-blue-400 hover:text-white">RepuGrid</a> Company</p>
+            <div class="flex justify-center space-x-6 text-sm text-gray-500">
+                <a href="/suite/node-watch/" class="hover:text-white">Node-Watch</a>
+                <a href="/suite/vault/" class="hover:text-white">Vault</a>
+                <a href="/suite/data-room/" class="hover:text-white">Investor Data Room</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>

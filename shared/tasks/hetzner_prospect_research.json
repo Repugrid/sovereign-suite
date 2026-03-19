@@ -1,0 +1,12 @@
+{
+  "task_id": "hetzner_prospect_research",
+  "role": "researcher",
+  "instruction": "Research and compile a targeted prospect list for Sovereign-Node-Watch sales outreach.\n\n**Mission:** Find contact details for high-value Hetzner users who would benefit from AI monitoring.\n\n**Target Profile:**\n- Companies/individuals using 3+ Hetzner servers (our Starter plan minimum)\n- Digital agencies, SaaS startups, dev shops, e-commerce sites\n- Located in Germany, Netherlands, UK (DACH + English markets)\n- Tech-savvy but not enterprise-scale (no massive dev teams)\n\n**Research Sources:**\n1. Hetzner community forums - look for users posting about server issues\n2. German tech forums/communities (heise.de, etc.)\n3. LinkedIn - search for \"Hetzner\" + \"CTO\" or \"developer\"\n4. GitHub repos that mention Hetzner deployment\n5. Dev Twitter/X accounts mentioning Hetzner problems\n\n**Deliverable Format:**\nCreate a JSON file with 20-30 qualified prospects:\n```json\n{\n  \"prospects\": [\n    {\n      \"name\": \"Company/Person Name\",\n      \"email\": \"contact@domain.com\", \n      \"source\": \"LinkedIn/GitHub/Forum\",\n      \"company_size\": \"5-15 employees\",\n      \"pain_point\": \"mentioned server downtime issues\",\n      \"approach_angle\": \"cost savings or reliability\"\n    }\n  ]\n}\n```\n\n**Focus on Quality Over Quantity:** \n- Only include contacts where we can reasonably infer they use multiple Hetzner servers\n- Prioritize contacts who've publicly discussed server monitoring pain points\n- Include WHY they're qualified (pain point evidence)\n\nSave results to `shared/results/hetzner_prospects.json`",
+  "context": {
+    "market": "DACH + UK",
+    "product": "Node-Watch",
+    "pricing": "\u20ac29-149/month"
+  },
+  "created_at": "2026-03-19T13:19:08.994126+00:00",
+  "status": "pending"
+}

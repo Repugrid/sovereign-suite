@@ -1,0 +1,12 @@
+{
+  "task_id": "market_research_vault",
+  "role": "researcher",
+  "instruction": "Research the AI-driven cloud backup/recovery market with Hetzner focus:\n\n**Market Size Analysis:**\n- How big is the backup market for SME hosting customers in Europe?\n- Specific focus on Hetzner user base (15,000-30,000 customers from Node-Watch research)\n- Annual spend on backup solutions by SME segment\n- Growth rate of cloud backup market 2024-2027\n\n**Competitive Analysis:**\n- Existing competitors: Hetzner Snapshots, Restic, BorgBackup, Acronis, Veeam, Duplicati\n- Pricing models: What do SMEs currently pay for backup solutions?\n- Feature gaps: What don't existing solutions offer?\n- Market positioning opportunities\n\n**Key Differentiator Research:**\n- Focus on \"autonomous disaster recovery\" angle\n- Research: How long do current solutions take for full server restoration?\n- Pain points: Manual recovery processes, complex setup, slow restoration\n- Target value prop: \"Your server dies \u2192 Vault spins up a clone on a new node in 90 seconds\"\n\n**Pricing Strategy:**\n- Competitive pricing analysis for backup solutions\n- Willingness to pay research for automated recovery\n- Bundle opportunity with Node-Watch monitoring\n\n**Market Gaps to Identify:**\n- One-Click Recovery automation\n- AI-driven backup scheduling that learns usage patterns\n- Cross-node restoration capabilities\n- Zero-downtime failover for Hetzner infrastructure\n\nSave comprehensive findings to `shared/results/market_research_vault.md` with clear sections for market size, competitive analysis, pricing strategy, and differentiation opportunities.",
+  "context": {
+    "target_market": "European SME Hetzner users",
+    "focus_differentiator": "90-second autonomous recovery",
+    "integration_opportunity": "Bundle with Node-Watch monitoring"
+  },
+  "created_at": "2026-03-19T11:23:06.516825+00:00",
+  "status": "pending"
+}

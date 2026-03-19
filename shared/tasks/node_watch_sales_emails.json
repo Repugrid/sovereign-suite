@@ -1,0 +1,12 @@
+{
+  "task_id": "node_watch_sales_emails",
+  "role": "marketer",
+  "instruction": "Create 3 personalized email templates for Sovereign-Node-Watch sales outreach.\n\n**Context:** We have a live product at http://37.27.189.23:9080/node-watch/ with PayPal payment integration. Pricing: \u20ac29 Starter, \u20ac79 Professional, \u20ac149 Enterprise.\n\n**Target Segments:**\n1. **Digital Agencies** - managing client servers, need white-label monitoring\n2. **SaaS Startups** - burning money on over-provisioned Hetzner instances  \n3. **Dev Teams** - tired of 3 AM downtime calls\n\n**Email Requirements:**\n- Subject line variations (A/B test friendly)\n- Personalization tokens: {name}, {company}, {pain_point}\n- Strong opening hook (specific pain point)\n- Social proof (mention our testimonials)\n- Clear value prop (save time + money)\n- Single, clear CTA (14-day free trial)\n- Professional but conversational tone\n- Length: 150-200 words max\n- Include unsubscribe footer\n\n**Template Structure:**\n```\nSubject: [Hook about their specific pain]\nHi {name},\n\n[Opening - specific pain point observation]\n[Value prop - how we solve it uniquely] \n[Social proof - brief testimonial/stat]\n[CTA - 14-day trial or demo]\n\nBest regards,\n[Signature with credibility markers]\n```\n\n**Output Format:** Create 3 complete email templates as markdown, each optimized for one segment.\n\nSave to `shared/results/node_watch_sales_emails.md`",
+  "context": {
+    "product_url": "http://37.27.189.23:9080/node-watch/",
+    "pricing": "\u20ac29-149/month",
+    "target": "Hetzner users"
+  },
+  "created_at": "2026-03-19T13:19:20.569010+00:00",
+  "status": "pending"
+}

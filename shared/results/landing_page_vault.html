@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>90-Second Hetzner Disaster Recovery | Sovereign-Vault</title>
+    <meta name="description" content="Autonomous disaster recovery for Hetzner servers. 90-second automated rebuild, €1,625+ saved per outage. 14-day free trial.">
+    <meta name="keywords" content="Hetzner backup, disaster recovery automation, server monitoring, 90 second server recovery, Hetzner infrastructure management, automated disaster recovery">
+    <meta name="robots" content="index, follow">
+    <meta property="og:title" content="90-Second Hetzner Disaster Recovery | Sovereign-Vault">
+    <meta property="og:description" content="Autonomous disaster recovery for Hetzner servers. 90-second automated rebuild, €1,625+ saved per outage.">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="90-Second Hetzner Disaster Recovery | Sovereign-Vault">
+    <meta name="twitter:description" content="Autonomous disaster recovery for Hetzner servers. 90-second automated rebuild, €1,625+ saved per outage.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'vault-green': '#10b981',
+                        'vault-green-dark': '#059669',
+                        'hero-dark': '#1e3a5f',
+                        'hero-darker': '#0f172a'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out forwards;
+        }
+        .stagger-1 { animation-delay: 0.1s; }
+        .stagger-2 { animation-delay: 0.2s; }
+        .stagger-3 { animation-delay: 0.3s; }
+        .hover-lift {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .hover-lift:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex items-center space-x-8">
+                    <div class="text-2xl font-bold text-gray-900">Vault</div>
+                    <div class="hidden md:flex space-x-6">
+                        <a href="/node-watch/" class="text-gray-600 hover:text-vault-green transition-colors">Node-Watch</a>
+                        <a href="#features" class="text-gray-600 hover:text-vault-green transition-colors">Features</a>
+                        <a href="#pricing" class="text-gray-600 hover:text-vault-green transition-colors">Pricing</a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="#" class="text-gray-600 hover:text-vault-green transition-colors">Login</a>
+                    <a href="#" class="bg-vault-green text-white px-4 py-2 rounded-lg hover:bg-vault-green-dark transition-colors">Start Free Trial</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gradient-to-br from-hero-dark to-hero-darker text-white py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 fade-in-up">Your Server Died. Vault Already Fixed It.</h1>
+                <p class="text-xl md:text-2xl mb-8 text-blue-100 fade-in-up stagger-1">90-second autonomous disaster recovery for Hetzner infrastructure. No manual intervention required.</p>
+                
+                <div class="flex flex-col sm:flex-row gap-4 justify-center mb-12 fade-in-up stagger-2">
+                    <a href="#" class="bg-vault-green text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-vault-green-dark transition-colors">Start 14-Day Free Trial</a>
+                    <a href="#" class="border border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-hero-dark transition-colors">See 90-Second Recovery Demo</a>
+                </div>
+
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center fade-in-up stagger-3">
+                    <div>
+                        <div class="text-2xl font-bold text-vault-green">90s</div>
+                        <div class="text-sm text-blue-100">Recovery Time</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-vault-green">€1,625+</div>
+                        <div class="text-sm text-blue-100">Saved per Outage</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-vault-green">Zero</div>
+                        <div class="text-sm text-blue-100">Manual Steps</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold text-vault-green">500+</div>
+                        <div class="text-sm text-blue-100">Companies Protected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cross-sell Banner -->
+    <section class="bg-vault-green text-white py-4">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p class="text-lg">Part of the Sovereign Suite — Bundle with Node-Watch and save 30%</p>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Transform Server Failures into Minor Inconveniences</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">10-30x faster recovery than traditional solutions — automatically rebuilding your infrastructure while you grab your coffee.</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-xl hover-lift fade-in-up">
+                    <div class="text-4xl mb-4">🚀</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Instant Recovery Engine</h3>
+                    <p class="text-gray-600 mb-4"><strong>Server failure detected → New server provisioned → Data restored → Traffic redirected</strong></p>
+                    <p class="text-gray-600">All in under 90 seconds. Fully automated. While competitors leave you scrambling for 15-60 minutes, Vault has already spun up a new server, restored your data, and redirected traffic.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl hover-lift fade-in-up stagger-1">
+                    <div class="text-4xl mb-4">🧠</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Intelligent Backup Scheduling</h3>
+                    <p class="text-gray-600 mb-4"><strong>AI learns your patterns and backs up before risky operations</strong></p>
+                    <p class="text-gray-600">Never lose more than 15 minutes of data. Our AI monitors your server activity, learns your patterns, and automatically creates backups before deployments, updates, or unusual activity.</p>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl hover-lift fade-in-up stagger-2">
+                    <div class="text-4xl mb-4">⚡</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Zero-Touch Management</h3>
+                    <p class="text-gray-600 mb-4"><strong>No complex setup. No manual recovery procedures.</strong></p>
+                    <p class="text-gray-600">Just install and forget. No disaster recovery playbooks to maintain. No 3 AM emergency calls. No complex enterprise software to learn. Install once, and Vault becomes your invisible infrastructure guardian.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold text-gray-900 mb-4">Simple, Transparent Pricing</h2>
+                <p class="text-xl text-gray-600">All plans include 14-day free trial and 30-day money-back guarantee</p>
+            </div>
+
+            <div class="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+                <div class="bg-white border-2 border-gray-200 p-8 rounded-xl hover-lift fade-in-up">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Basic</h3>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">€39<span class="text-lg text-gray-600">/month</span></div>
+                    <p class="text-gray-600 mb-6">per server</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Automated backups</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Server monitoring</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Email alerts</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>7-day retention</li>
+                    </ul>
+                    <a href="#" class="block w-full bg-gray-200 text-gray-900 text-center py-3 rounded-lg hover:bg-gray-300 transition-colors">Start Free Trial</a>
+                </div>
+
+                <div class="bg-white border-2 border-vault-green p-8 rounded-xl hover-lift fade-in-up stagger-1 relative">
+                    <div class="absolute -top-4 left-1/2 transform -translate-x-1/2 bg-vault-green text-white px-4 py-1 rounded-full text-sm font-semibold">⭐ MOST POPULAR</div>
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Professional</h3>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">€69<span class="text-lg text-gray-600">/month</span></div>
+                    <p class="text-gray-600 mb-6">per server</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Everything in Basic</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span><strong>90-second autonomous recovery</strong></li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>AI-driven backup scheduling</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>30-day retention</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Priority support</li>
+                    </ul>
+                    <a href="#" class="block w-full bg-vault-green text-white text-center py-3 rounded-lg hover:bg-vault-green-dark transition-colors">Start Free Trial</a>
+                </div>
+
+                <div class="bg-white border-2 border-gray-200 p-8 rounded-xl hover-lift fade-in-up stagger-2">
+                    <h3 class="text-2xl font-bold mb-4 text-gray-900">Enterprise</h3>
+                    <div class="text-4xl font-bold text-gray-900 mb-2">€99<span class="text-lg text-gray-600">/month</span></div>
+                    <p class="text-gray-600 mb-6">per server</p>
+                    <ul class="space-y-3 mb-8">
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Everything in Professional</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Multi-region deployment</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Compliance reporting</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Custom retention policies</li>
+                        <li class="flex items-center"><span class="text-vault-green mr-2">✓</span>Dedicated success manager</li>
+                    </ul>
+                    <a href="#" class="block w-full bg-gray-200 text-gray-900 text-center py-3 rounded-lg hover:bg-gray-300 transition-colors">Contact Sales</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-2 gap-12">
+                <div class="bg-white p-8 rounded-xl hover-lift fade-in-up">
+                    <p class="text-lg text-gray-700 mb-4 italic">"We went from 45-minute recovery times to 90 seconds. Our customers don't even notice outages anymore."</p>
+                    <div class="font-semibold text-gray-900">— Sarah Mitchell</div>
+                    <div class="text-gray-600">CTO at DataFlow Solutions</div>
+                </div>
+
+                <div class="bg-white p-8 rounded-xl hover-lift fade-in-up stagger-1">
+                    <p class="text-lg text-gray-700 mb-4 italic">"Vault paid for itself after preventing just one major outage. Best investment we've made."</p>
+                    <div class="font-semibold text-gray-900">— Klaus Weber</div>
+                    <div class="text-gray-600">Infrastructure Lead at TechnoServ GmbH</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-hero-dark to-hero-darker text-white">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-6">Ready to Never Worry About Server Failures Again?</h2>
+            <p class="text-xl mb-8 text-blue-100">Join 500+ companies who chose reliability over risk</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#" class="bg-vault-green text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-vault-green-dark transition-colors">Start 14-Day Free Trial</a>
+                <a href="#" class="border border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-hero-dark transition-colors">Contact Sales</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="text-2xl font-bold mb-4">Vault</div>
+                    <p class="text-gray-400">90-second autonomous disaster recovery for Hetzner infrastructure.</p>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Product</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#features" class="hover:text-white transition-colors">Features</a></li>
+                        <li><a href="#pricing" class="hover:text-white transition-colors">Pricing</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Demo</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">About</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Support</a></li>
+                        <li><a href="/node-watch/" class="hover:text-white transition-colors">Node-Watch</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="font-semibold mb-4">Legal</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Security</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center text-gray-400">
+                <p>© 2026 Sovereign Suite | <a href="/node-watch/" class="hover:text-white transition-colors">Node-Watch</a> | Vault</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Add fade-in animations on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements that should fade in
+        document.querySelectorAll('section > div > div > div, .hover-lift').forEach(el => {
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>

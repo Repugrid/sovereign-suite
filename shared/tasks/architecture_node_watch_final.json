@@ -1,0 +1,8 @@
+{
+  "task_id": "architecture_node_watch_final",
+  "role": "coder",
+  "instruction": "Create a focused technical architecture specification for \"Sovereign-Node-Watch\" - AI-driven Hetzner server monitoring with auto-remediation.\n\nCORE REQUIREMENTS (keep focused):\n\n1. **System Architecture Overview:**\n   - Agent: Lightweight monitoring daemon on customer servers (< 50MB RAM)\n   - Central Platform: Data aggregation, AI analysis, dashboard \n   - Integration Layer: Hetzner API connectivity\n   - Alert Engine: Multi-channel notifications\n\n2. **Key Technical Components:**\n   - Metrics Collection: CPU, RAM, disk, network, processes\n   - AI Engine: Anomaly detection + predictive analysis\n   - Auto-Remediation: Safe automated fixes (disk cleanup, service restart)\n   - Hetzner Integration: Cloud API, Robot API for server management\n\n3. **Data Flow:**\n   - Agent collects metrics \u2192 Central platform \u2192 AI analysis \u2192 Actions/Alerts\n\n4. **Deployment Strategy:**\n   - Agent installation methods (curl script, package manager)\n   - Update mechanism and rollback procedures\n\n5. **Security & Compliance:**\n   - Customer data isolation\n   - GDPR compliance for EU market\n   - API key management\n\n6. **MVP Technology Stack Recommendations:**\n   - Programming languages\n   - Database for time-series data\n   - Infrastructure hosting approach\n\nKeep the document focused and practical - aim for implementation-ready specifications rather than theoretical depth. Save to shared/results/architecture_node_watch_final.md\n\nTarget length: 2000-3000 words with clear sections and actionable technical decisions.",
+  "context": {},
+  "created_at": "2026-03-19T10:29:55.667051+00:00",
+  "status": "pending"
+}

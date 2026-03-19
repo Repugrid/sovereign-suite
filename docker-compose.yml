@@ -1,0 +1,49 @@
+services:
+  ceo-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sovereign-ceo
+    env_file:
+      - .env
+    volumes:
+      - ./shared:/root/sovereign/shared
+      - ./logs:/root/sovereign/logs
+      - ./config:/root/sovereign/config:ro
+      - ./agents:/root/sovereign/agents:ro
+      - ./deployments:/root/sovereign/deployments
+      # Docker socket so CEO can spawn worker containers
+      - /var/run/docker.sock:/var/run/docker.sock
+      # .env needed by spawner to pass to workers
+      - ./.env:/root/sovereign/.env:ro
+    restart: unless-stopped
+    networks:
+      - sovereign-net
+    deploy:
+      resources:
+        limits:
+          memory: 2G
+
+  webserver:
+    image: nginx:alpine
+    container_name: sovereign-web
+    volumes:
+      - ./deployments:/usr/share/nginx/html:ro
+      - ./shared/results/DATA_ROOM:/usr/share/nginx/data-room:ro
+      - ./config/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./config/.htpasswd:/etc/nginx/.htpasswd:ro
+    ports:
+      - "9080:80"
+    restart: unless-stopped
+    networks:
+      - sovereign-net
+      - repugrid-net
+    labels:
+      - "traefik.enable=false"
+
+networks:
+  sovereign-net:
+    driver: bridge
+  repugrid-net:
+    external: true
+    name: repugrid_repugrid-net

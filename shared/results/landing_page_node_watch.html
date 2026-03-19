@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sovereign-Node-Watch - AI-Powered Hetzner Monitoring That Actually Works</title>
+    <meta name="description" content="The only monitoring solution built specifically for Hetzner infrastructure. Get predictive alerts, automatic fixes, and peace of mind for €9-49/month.">
+    <meta property="og:title" content="Sovereign-Node-Watch - AI-Powered Hetzner Monitoring">
+    <meta property="og:description" content="Stop server fires before they start with AI-powered Hetzner monitoring. No DevOps team required.">
+    <meta property="og:image" content="/og-image-placeholder.jpg">
+    <meta property="og:type" content="website">
+    
+    <!-- Favicon using emoji -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🖥️</text></svg>">
+    
+    <!-- Tailwind CSS via CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary': '#1e3a5f',
+                        'accent': '#3b82f6',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+        
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .gradient-hero {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 100%);
+        }
+        
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="bg-white">
+    <!-- Hero Section -->
+    <header class="gradient-hero text-white relative overflow-hidden">
+        <div class="absolute inset-0 bg-black opacity-10"></div>
+        <div class="container mx-auto px-6 py-20 relative z-10">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    Stop Server Fires Before They Start – 
+                    <span class="text-blue-300">AI-Powered Hetzner Monitoring</span> 
+                    That Actually Works
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
+                    The only monitoring solution built specifically for Hetzner infrastructure. Get predictive alerts, automatic fixes, and peace of mind for €9-49/month – no DevOps team required.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="#signup" class="bg-accent text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-blue-600 transition-colors duration-300 shadow-lg hover:shadow-xl">
+                        Start Your Free 14-Day Trial →
+                    </a>
+                    <a href="#signup" class="border-2 border-white text-white px-8 py-4 rounded-lg text-lg font-semibold hover:bg-white hover:text-primary transition-all duration-300">
+                        Book a 15-Minute Demo
+                    </a>
+                </div>
+                <p class="text-sm mt-4 opacity-75">Setup takes 2 minutes. No credit card required.</p>
+            </div>
+        </div>
+        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-white to-transparent"></div>
+    </header>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto">
+                <!-- Feature 1 -->
+                <div class="mb-20 fade-in">
+                    <div class="flex flex-col lg:flex-row items-center gap-12">
+                        <div class="lg:w-1/2">
+                            <div class="text-6xl mb-6">🧠</div>
+                            <h2 class="text-4xl font-bold text-primary mb-6">AI-Powered Predictive Intelligence</h2>
+                            <h3 class="text-2xl font-semibold text-gray-700 mb-4">See Problems Coming Before They Happen</h3>
+                            <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                                While other tools just alert you after things break, our AI engine learns your Hetzner servers' behavior patterns and predicts issues up to 30 minutes before they occur. Auto-remediation kicks in instantly for common problems like memory leaks, disk space, and service crashes.
+                            </p>
+                            <p class="text-primary font-semibold italic">
+                                No more 3 AM panic calls. No more explaining downtime to angry clients.
+                            </p>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="bg-gray-100 rounded-2xl p-8 shadow-lg">
+                                <div class="space-y-4">
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
+                                        <span class="text-sm text-gray-600">Predicting CPU spike in 28 minutes...</span>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-3 h-3 bg-yellow-500 rounded-full"></div>
+                                        <span class="text-sm text-gray-600">Memory leak detected, auto-fix initiated</span>
+                                    </div>
+                                    <div class="flex items-center gap-4">
+                                        <div class="w-3 h-3 bg-blue-500 rounded-full"></div>
+                                        <span class="text-sm text-gray-600">Disk space optimization completed</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="mb-20 fade-in">
+                    <div class="flex flex-col lg:flex-row-reverse items-center gap-12">
+                        <div class="lg:w-1/2">
+                            <div class="text-6xl mb-6">💰</div>
+                            <h2 class="text-4xl font-bold text-primary mb-6">Hetzner-Native Optimization</h2>
+                            <h3 class="text-2xl font-semibold text-gray-700 mb-4">Built for Hetzner. Optimized for Your Budget.</h3>
+                            <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                                Unlike generic monitoring tools that ignore your hosting environment, we're deeply integrated with Hetzner's infrastructure. Get cost intelligence that shows exactly where you're overspending, plus Hetzner-specific optimizations that can cut your hosting costs by 20-40%.
+                            </p>
+                            <p class="text-primary font-semibold italic">
+                                Why pay enterprise prices when your infrastructure isn't enterprise-scale?
+                            </p>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-2xl p-8 shadow-lg">
+                                <h4 class="font-bold text-primary mb-4">Monthly Cost Savings</h4>
+                                <div class="space-y-3">
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Server optimization</span>
+                                        <span class="font-semibold text-green-600">-€127</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Resource rightsizing</span>
+                                        <span class="font-semibold text-green-600">-€84</span>
+                                    </div>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-gray-600">Auto-scaling tuning</span>
+                                        <span class="font-semibold text-green-600">-€56</span>
+                                    </div>
+                                    <hr class="border-gray-300">
+                                    <div class="flex justify-between items-center font-bold">
+                                        <span>Total Savings</span>
+                                        <span class="text-green-600">-€267/mo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="mb-20 fade-in">
+                    <div class="flex flex-col lg:flex-row items-center gap-12">
+                        <div class="lg:w-1/2">
+                            <div class="text-6xl mb-6">⚡</div>
+                            <h2 class="text-4xl font-bold text-primary mb-6">Set-and-Forget Simplicity</h2>
+                            <h3 class="text-2xl font-semibold text-gray-700 mb-4">Monitoring That Actually Lets You Focus on Building</h3>
+                            <p class="text-lg text-gray-600 leading-relaxed mb-6">
+                                Tired of babysitting complex dashboards? Our "zero-touch" monitoring works perfectly for busy developers and agencies. Set it up once, and it quietly keeps your servers healthy while you focus on what matters – growing your business.
+                            </p>
+                            <p class="text-primary font-semibold italic">
+                                Finally, monitoring that works for teams of 1-10, not 100.
+                            </p>
+                        </div>
+                        <div class="lg:w-1/2">
+                            <div class="bg-gray-50 rounded-2xl p-8 shadow-lg">
+                                <div class="text-center">
+                                    <div class="text-4xl mb-4">🎯</div>
+                                    <h4 class="font-bold text-primary mb-2">2-Minute Setup</h4>
+                                    <div class="flex justify-center items-center space-x-2 text-sm text-gray-600 mb-6">
+                                        <span class="bg-green-100 text-green-800 px-2 py-1 rounded">1. Connect</span>
+                                        <span>→</span>
+                                        <span class="bg-blue-100 text-blue-800 px-2 py-1 rounded">2. Configure</span>
+                                        <span>→</span>
+                                        <span class="bg-purple-100 text-purple-800 px-2 py-1 rounded">3. Relax</span>
+                                    </div>
+                                    <p class="text-gray-600">Zero ongoing maintenance required</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Proof Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto fade-in">
+                <h2 class="text-4xl font-bold text-primary text-center mb-4">Trusted by Smart Teams Who Value Their Time</h2>
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <div class="text-yellow-500 text-2xl mb-3">⭐⭐⭐⭐⭐</div>
+                        <p class="text-gray-700 font-semibold mb-3">"Saved us 15 hours/week on server maintenance"</p>
+                        <p class="text-sm text-gray-600">– Sarah K., CTO, GrowthLab Berlin</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <div class="text-yellow-500 text-2xl mb-3">⭐⭐⭐⭐⭐</div>
+                        <p class="text-gray-700 font-semibold mb-3">"Cut our Hetzner costs by 35% in first month"</p>
+                        <p class="text-sm text-gray-600">– Marcus T., Digital Agency Owner</p>
+                    </div>
+                    <div class="bg-white p-6 rounded-lg shadow-md card-hover">
+                        <div class="text-yellow-500 text-2xl mb-3">⭐⭐⭐⭐⭐</div>
+                        <p class="text-gray-700 font-semibold mb-3">"Finally, monitoring I can actually understand"</p>
+                        <p class="text-sm text-gray-600">– Lisa R., Freelance Developer</p>
+                    </div>
+                </div>
+                <div class="flex flex-wrap justify-center items-center gap-8 text-primary font-semibold">
+                    <span class="flex items-center gap-2">🔒 SOC2 Compliant</span>
+                    <span class="flex items-center gap-2">🇪🇺 GDPR Ready</span>
+                    <span class="flex items-center gap-2">🕐 24/7 EU Support</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pricing Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-6xl mx-auto fade-in">
+                <h2 class="text-4xl font-bold text-primary text-center mb-4">Simple Pricing for Real Businesses</h2>
+                <div class="grid md:grid-cols-3 gap-8 mt-12">
+                    <!-- Starter Plan -->
+                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 card-hover">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold text-primary mb-2">STARTER</h3>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">€9<span class="text-lg text-gray-600">/month</span></div>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Up to 3 servers</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>AI predictive alerts</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Basic auto-remediation</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Hetzner cost insights</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Email support</span>
+                            </li>
+                        </ul>
+                        <a href="#signup" class="block w-full bg-accent text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300">
+                            Start Free Trial
+                        </a>
+                    </div>
+
+                    <!-- Professional Plan -->
+                    <div class="bg-white border-2 border-accent rounded-2xl p-8 card-hover relative">
+                        <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+                            <span class="bg-accent text-white px-4 py-2 rounded-full text-sm font-semibold">Most Popular</span>
+                        </div>
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold text-primary mb-2">PROFESSIONAL</h3>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">€29<span class="text-lg text-gray-600">/month</span></div>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Up to 15 servers</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Advanced AI remediation</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Custom alert rules</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Priority support</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Slack/Teams integration</span>
+                            </li>
+                        </ul>
+                        <a href="#signup" class="block w-full bg-accent text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300">
+                            Start Free Trial
+                        </a>
+                    </div>
+
+                    <!-- Agency Plan -->
+                    <div class="bg-white border-2 border-gray-200 rounded-2xl p-8 card-hover">
+                        <div class="text-center mb-8">
+                            <h3 class="text-2xl font-bold text-primary mb-2">AGENCY</h3>
+                            <div class="text-4xl font-bold text-gray-900 mb-2">€49<span class="text-lg text-gray-600">/month</span></div>
+                        </div>
+                        <ul class="space-y-4 mb-8">
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Unlimited servers</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>White-label reports</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Multi-client management</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Dedicated success manager</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <span class="text-green-500 text-xl">✓</span>
+                                <span>Phone support</span>
+                            </li>
+                        </ul>
+                        <a href="#signup" class="block w-full bg-accent text-white text-center px-6 py-3 rounded-lg font-semibold hover:bg-blue-600 transition-colors duration-300">
+                            Start Free Trial
+                        </a>
+                    </div>
+                </div>
+                <p class="text-center text-gray-600 mt-8">All plans include 14-day free trial. No setup fees. Cancel anytime.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-20 gradient-hero text-white">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center fade-in">
+                <h2 class="text-4xl font-bold mb-6">Ready to Sleep Better at Night?</h2>
+                <p class="text-xl mb-8 opacity-90">Join 500+ developers who've eliminated server stress with intelligent Hetzner monitoring.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center mb-6">
+                    <a href="#signup" class="bg-white text-primary px-8 py-4 rounded-lg text-lg font-semibold hover:bg-gray-100 transition-colors duration-300 shadow-lg">
+                        Start Your Free 14-Day Trial →
+                    </a>
+                </div>
+                <p class="text-sm opacity-75 mb-6">Setup takes 2 minutes. No credit card required.</p>
+                <div class="flex flex-col sm:flex-row gap-6 justify-center items-center text-sm">
+                    <a href="#signup" class="text-blue-300 hover:text-white underline transition-colors">Book a 15-Minute Demo →</a>
+                    <span class="hidden sm:inline text-blue-300">|</span>
+                    <a href="#signup" class="text-blue-300 hover:text-white underline transition-colors">View Live Dashboard →</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-primary text-white py-12">
+        <div class="container mx-auto px-6">
+            <div class="text-center">
+                <div class="text-2xl font-bold mb-4">🖥️ Sovereign-Node-Watch</div>
+                <p class="text-blue-200 mb-8">AI-Powered Hetzner Monitoring That Actually Works</p>
+                <div class="border-t border-blue-800 pt-8">
+                    <p class="text-sm text-blue-200">© 2026 Sovereign-Node-Watch. All rights reserved.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Signup Modal Placeholder -->
+    <div id="signup" class="hidden">
+        <!-- This would contain the signup form in a real implementation -->
+    </div>
+
+    <!-- Vanilla JS for animations -->
+    <script>
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all elements with fade-in class
+        document.addEventListener('DOMContentLoaded', () => {
+            const fadeElements = document.querySelectorAll('.fade-in');
+            fadeElements.forEach(el => observer.observe(el));
+
+            // Add smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "task_id": "vault_landing_html",
+  "role": "coder",
+  "instruction": "Read `shared/results/landing_page_vault.md` and create a production-ready HTML landing page.\n\nRequirements:\n- Single HTML file, Tailwind CSS via CDN (`<script src='https://cdn.tailwindcss.com'></script>`)\n- Design MUST match Node-Watch style for brand consistency:\n  - Dark hero: Deep blue (#1e3a5f) to darker (#0f172a) gradient\n  - Accent: Green (#10b981) instead of blue (to differentiate from Node-Watch)\n  - White content sections, same card-hover and fade-in animations\n- Hero: headline, subheadline, CTA\n- 3 feature blocks with emoji icons\n- Pricing section with 3 tiers\n- Cross-sell banner: 'Part of the Sovereign Suite \u2014 Bundle with Node-Watch and save 30%'\n- Footer: '2026 Sovereign Suite | Node-Watch | Vault'\n- Link to /node-watch/ in navigation\n- Meta tags for SEO\n- Save to `shared/results/landing_page_vault.html`",
+  "context": {
+    "brand": "Sovereign Suite",
+    "product": "Vault",
+    "accent_color": "#10b981"
+  },
+  "created_at": "2026-03-19T13:36:07.521817+00:00",
+  "status": "pending"
+}

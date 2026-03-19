@@ -1,0 +1,8 @@
+{
+  "task_id": "market_research_node_watch",
+  "role": "researcher",
+  "instruction": "Conduct comprehensive market research for \"Sovereign-Node-Watch\" - a Micro-SaaS that monitors Hetzner server metrics and suggests/applies AI-driven fixes for anomalies.\n\nRESEARCH TARGETS:\n1. Hetzner market size: How many VPS/dedicated server customers do they have? Growth rate? Customer segments?\n2. Competitive landscape: Analyze existing server monitoring tools (Datadog, New Relic, Netdata, Hetrixtools, Zabbix, Nagios, etc.)\n   - Features, pricing models, strengths/weaknesses\n   - Focus on what gaps exist for AI-driven auto-remediation\n3. Market gaps: What problems do current solutions NOT solve that AI could address?\n   - Predictive failure detection\n   - Automated remediation beyond alerting\n   - Cost optimization recommendations\n   - Learning user behavior patterns\n4. Pricing analysis: What do competitors charge? Freemium vs paid tiers?\n5. Target customer profile: Who would pay for AI-enhanced server monitoring?\n\nUse web research extensively. Look for Hetzner press releases, competitor websites, industry reports, Reddit discussions, etc.\n\nSave all findings in structured markdown to shared/results/market_research_node_watch.md with clear sections, data sources, and actionable insights.",
+  "context": {},
+  "created_at": "2026-03-19T10:13:27.104686+00:00",
+  "status": "pending"
+}

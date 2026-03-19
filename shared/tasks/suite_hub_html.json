@@ -1,0 +1,12 @@
+{
+  "task_id": "suite_hub_html",
+  "role": "coder",
+  "instruction": "Create a professional hub page for the Sovereign Suite brand.\n\nRequirements:\n- Single HTML file, Tailwind CSS via CDN\n- Dark theme throughout (matches the product pages)\n- Color: Deep blue (#1e3a5f) primary, white text\n- Header: 'Sovereign Suite' logo text + tagline 'AI-Powered Infrastructure Management'\n- Two product cards side by side:\n  - Node-Watch card: monitoring icon, 3-line description, 'From \u20ac29/mo', link to /node-watch/\n  - Vault card: backup icon, 3-line description, 'From \u20ac39/mo', link to /vault/\n- Bundle pricing banner: 'Get both for \u20ac49/mo (save 30%)'\n- Bottom section: 'Built by AI. Trusted by Engineers.' + brief trust copy\n- Footer with links to /data-room/ (for investors)\n- Save to `shared/results/sovereign_suite_index.html`",
+  "context": {
+    "brand": "Sovereign Suite",
+    "theme": "dark",
+    "primary_color": "#1e3a5f"
+  },
+  "created_at": "2026-03-19T13:36:07.808775+00:00",
+  "status": "pending"
+}

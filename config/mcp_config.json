@@ -1,0 +1,22 @@
+{
+  "mcpServers": {
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/root/sovereign/shared",
+        "/root/sovereign/logs"
+      ],
+      "description": "Read/write access to shared workspace and logs"
+    },
+    "fetch": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-fetch"
+      ],
+      "description": "HTTP fetch for web research, API calls, scraping"
+    }
+  }
+}
