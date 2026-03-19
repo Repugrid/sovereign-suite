@@ -21,6 +21,35 @@ VALID_ROLES = {"coder", "marketer", "researcher"}
 # Worker Docker image (built once, reused for all workers)
 WORKER_IMAGE = "sovereign-worker"
 
+# Hard limits to prevent runaway spending
+MAX_WORKERS_PER_DAY = 10
+DAILY_SPAWN_LOG = SHARED_DIR / ".worker_spawns_today.json"
+
+
+def _check_spawn_limit() -> tuple[bool, int]:
+    """Check if we've hit the daily worker spawn limit. Returns (allowed, count)."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    try:
+        data = json.loads(DAILY_SPAWN_LOG.read_text())
+        if data.get("date") != today:
+            data = {"date": today, "count": 0}
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {"date": today, "count": 0}
+    return data["count"] < MAX_WORKERS_PER_DAY, data["count"]
+
+
+def _record_spawn():
+    """Increment today's spawn counter."""
+    today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    try:
+        data = json.loads(DAILY_SPAWN_LOG.read_text())
+        if data.get("date") != today:
+            data = {"date": today, "count": 0}
+    except (FileNotFoundError, json.JSONDecodeError):
+        data = {"date": today, "count": 0}
+    data["count"] += 1
+    DAILY_SPAWN_LOG.write_text(json.dumps(data))
+
 
 def build_worker_image():
     """Build the worker Docker image if it doesn't exist."""
@@ -75,6 +104,11 @@ def spawn_worker(role: str, task_id: str, instruction: str, context: dict | None
     if role not in VALID_ROLES:
         return {"error": f"Invalid role: {role}. Must be one of {VALID_ROLES}"}
 
+    # Hard limit: max workers per day
+    allowed, count = _check_spawn_limit()
+    if not allowed:
+        return {"error": f"Daily worker limit reached ({MAX_WORKERS_PER_DAY}). {count} workers spawned today. Try again tomorrow."}
+
     # Generate IDs
     if not task_id:
         task_id = f"task_{role}_{uuid.uuid4().hex[:8]}"
@@ -114,6 +148,7 @@ def spawn_worker(role: str, task_id: str, instruction: str, context: dict | None
         }
 
     container_id = result.stdout.strip()[:12]
+    _record_spawn()
 
     log_event("worker_spawned", {
         "worker_id": worker_id,

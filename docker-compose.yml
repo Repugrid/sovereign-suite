@@ -16,7 +16,7 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
       # .env needed by spawner to pass to workers
       - ./.env:/root/sovereign/.env:ro
-    restart: unless-stopped
+    restart: on-failure
     networks:
       - sovereign-net
     deploy:

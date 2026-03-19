@@ -8,6 +8,7 @@ import json
 import os
 import sys
 import time
+import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
@@ -65,9 +66,30 @@ def telegram_send(text: str, parse_mode: str = "Markdown") -> bool:
 
 
 # ── State ───────────────────────────────────────────────────────────────
+BUDGET_FILE = Path("/root/sovereign/shared/.budget_spent_today.json")
 daily_cost_usd = 0.0
 session_start = datetime.now(timezone.utc)
 task_check_counts: dict[str, int] = {}  # Track how many times each task was polled
+
+
+def _load_persisted_budget() -> float:
+    """Load today's spend from disk. Returns 0.0 if file missing or stale."""
+    try:
+        data = json.loads(BUDGET_FILE.read_text())
+        if data.get("date") == datetime.now(timezone.utc).strftime("%Y-%m-%d"):
+            return float(data.get("spent_usd", 0.0))
+    except (FileNotFoundError, json.JSONDecodeError, KeyError):
+        pass
+    return 0.0
+
+
+def _persist_budget(spent: float):
+    """Write today's cumulative spend to disk."""
+    BUDGET_FILE.write_text(json.dumps({
+        "date": datetime.now(timezone.utc).strftime("%Y-%m-%d"),
+        "spent_usd": round(spent, 4),
+        "updated_at": datetime.now(timezone.utc).isoformat(),
+    }))
 
 
 def estimate_cost(usage: anthropic.types.Usage) -> float:
@@ -329,6 +351,34 @@ def build_mcp_tools() -> list[dict]:
                     "body": {"type": "string", "description": "Comment body (Markdown)"},
                 },
                 "required": ["issue_number", "body"],
+            },
+        },
+        {
+            "name": "github_create_issue",
+            "description": "Create a GitHub Issue in the sovereign-suite repo.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "title": {"type": "string", "description": "Issue title"},
+                    "body": {"type": "string", "description": "Issue body (Markdown)"},
+                    "labels": {
+                        "type": "array",
+                        "items": {"type": "string"},
+                        "description": "Labels (e.g. ['good first issue', 'help wanted'])",
+                    },
+                },
+                "required": ["title", "body"],
+            },
+        },
+        {
+            "name": "post_tweet",
+            "description": "Post a tweet to X/Twitter from the Sovereign account. Max 280 characters. Use for announcements, milestones, and engagement. Do NOT spam — max 5 tweets per day.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "text": {"type": "string", "description": "Tweet text (max 280 chars)"},
+                },
+                "required": ["text"],
             },
         },
         # ── Email Tools ──────────────────────────────────────────────
@@ -647,6 +697,122 @@ def handle_tool_call(tool_name: str, tool_input: dict) -> str:
         except Exception as e:
             return json.dumps({"error": f"GitHub API failed: {e}"})
 
+    elif tool_name == "github_create_issue":
+        import urllib.request as urllib2
+        gh_token = os.getenv("GITHUB_TOKEN", "")
+        gh_repo = os.getenv("GITHUB_REPO", "Repugrid/sovereign-suite")
+        if not gh_token:
+            return json.dumps({"error": "GITHUB_TOKEN not configured"})
+        try:
+            payload_data = {
+                "title": tool_input["title"],
+                "body": tool_input["body"],
+            }
+            if tool_input.get("labels"):
+                payload_data["labels"] = tool_input["labels"]
+            payload = json.dumps(payload_data).encode()
+            req = urllib2.Request(
+                f"https://api.github.com/repos/{gh_repo}/issues",
+                data=payload,
+                headers={
+                    "Authorization": f"token {gh_token}",
+                    "Accept": "application/vnd.github+json",
+                    "Content-Type": "application/json",
+                },
+            )
+            with urllib2.urlopen(req, timeout=15) as resp:
+                result = json.loads(resp.read())
+            telegram_send("🐛 *GitHub Issue #%s:* %s\n%s" % (
+                result.get("number"), tool_input["title"], result.get("html_url", "")))
+            return json.dumps({"status": "created", "url": result.get("html_url"), "number": result.get("number")})
+        except Exception as e:
+            return json.dumps({"error": f"GitHub Issue creation failed: {e}"})
+
+    elif tool_name == "post_tweet":
+        import urllib.request as urllib2
+        import hashlib
+        import hmac
+        import base64
+        import urllib.parse
+
+        api_key = os.getenv("TWITTER_API_KEY", "")
+        api_secret = os.getenv("TWITTER_API_SECRET", "")
+        access_token = os.getenv("TWITTER_ACCESS_TOKEN", "")
+        access_secret = os.getenv("TWITTER_ACCESS_TOKEN_SECRET", "")
+
+        if not all([api_key, api_secret, access_token, access_secret]):
+            return json.dumps({"error": "Twitter API keys not configured. Set TWITTER_API_KEY, TWITTER_API_SECRET, TWITTER_ACCESS_TOKEN, TWITTER_ACCESS_TOKEN_SECRET in .env"})
+
+        tweet_text = tool_input["text"][:280]
+
+        # Check daily tweet limit
+        tweet_log = Path("/root/sovereign/logs/tweets_sent.jsonl")
+        tweet_log.parent.mkdir(parents=True, exist_ok=True)
+        today = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+        tweets_today = 0
+        if tweet_log.exists():
+            for line in tweet_log.read_text().strip().split("\n"):
+                if line and today in line:
+                    tweets_today += 1
+        if tweets_today >= 5:
+            return json.dumps({"error": f"Daily tweet limit reached (5/day). {tweets_today} sent today."})
+
+        try:
+            # OAuth 1.0a signature
+            import time as _time
+            url = "https://api.twitter.com/2/tweets"
+            oauth_nonce = uuid.uuid4().hex
+            oauth_timestamp = str(int(_time.time()))
+
+            oauth_params = {
+                "oauth_consumer_key": api_key,
+                "oauth_nonce": oauth_nonce,
+                "oauth_signature_method": "HMAC-SHA1",
+                "oauth_timestamp": oauth_timestamp,
+                "oauth_token": access_token,
+                "oauth_version": "1.0",
+            }
+
+            # Create signature base string
+            param_string = "&".join(f"{urllib.parse.quote(k, safe='')}={urllib.parse.quote(v, safe='')}"
+                                     for k, v in sorted(oauth_params.items()))
+            base_string = f"POST&{urllib.parse.quote(url, safe='')}&{urllib.parse.quote(param_string, safe='')}"
+            signing_key = f"{urllib.parse.quote(api_secret, safe='')}&{urllib.parse.quote(access_secret, safe='')}"
+            signature = base64.b64encode(
+                hmac.new(signing_key.encode(), base_string.encode(), hashlib.sha1).digest()
+            ).decode()
+
+            oauth_params["oauth_signature"] = signature
+            auth_header = "OAuth " + ", ".join(
+                f'{urllib.parse.quote(k, safe="")}="{urllib.parse.quote(v, safe="")}"'
+                for k, v in sorted(oauth_params.items())
+            )
+
+            payload = json.dumps({"text": tweet_text}).encode()
+            req = urllib2.Request(url, data=payload, headers={
+                "Authorization": auth_header,
+                "Content-Type": "application/json",
+            })
+            with urllib2.urlopen(req, timeout=15) as resp:
+                result = json.loads(resp.read())
+
+            tweet_id = result.get("data", {}).get("id", "unknown")
+            tweet_url = f"https://x.com/i/status/{tweet_id}"
+
+            # Log it
+            with open(tweet_log, "a") as f:
+                f.write(json.dumps({
+                    "ts": datetime.now(timezone.utc).isoformat(),
+                    "text": tweet_text,
+                    "tweet_id": tweet_id,
+                }) + "\n")
+
+            telegram_send("🐦 *Tweet posted:*\n%s\n%s" % (tweet_text[:200], tweet_url))
+            return json.dumps({"status": "posted", "tweet_id": tweet_id, "url": tweet_url})
+
+        except Exception as e:
+            return json.dumps({"error": f"Twitter API failed: {e}"})
+
     return f"Unknown tool: {tool_name}"
 
 
@@ -654,11 +820,18 @@ def run_ceo_loop():
     """Main agentic loop — CEO thinks, uses tools, repeats."""
     global daily_cost_usd
 
+    # Restore spend from disk so restarts don't reset the budget
+    daily_cost_usd = _load_persisted_budget()
+    if daily_cost_usd >= DAILY_BUDGET:
+        print(f"[Sovereign] Budget already spent today (${daily_cost_usd:.2f}/${DAILY_BUDGET:.2f}). Exiting.")
+        telegram_send("🔴 *CEO restart blocked* — budget already spent ($%.2f/$%.2f)" % (daily_cost_usd, DAILY_BUDGET))
+        sys.exit(0)
+
     client = anthropic.Anthropic()
     system_prompt = load_system_prompt()
     tools = build_mcp_tools()
 
-    print(f"[Sovereign] CEO Agent starting — budget: ${DAILY_BUDGET}/day")
+    print(f"[Sovereign] CEO Agent starting — budget: ${DAILY_BUDGET}/day (already spent: ${daily_cost_usd:.2f})")
     print(f"[Sovereign] Model: {MODEL}")
     log_event("startup", {"model": MODEL, "budget": DAILY_BUDGET})
     telegram_send("🟢 *Sovereign CEO online*\nBudget: $%.2f/day\nModel: %s" % (DAILY_BUDGET, MODEL))
@@ -681,9 +854,10 @@ def run_ceo_loop():
         # Budget check
         if daily_cost_usd >= DAILY_BUDGET:
             log_event("budget_exceeded", {"spent": daily_cost_usd})
+            _persist_budget(daily_cost_usd)
             print(f"[Sovereign] BUDGET EXCEEDED (${daily_cost_usd:.2f}). Shutting down.")
             telegram_send("🔴 *Budget exceeded!* $%.2f spent. CEO shutting down." % daily_cost_usd)
-            break
+            sys.exit(0)  # Exit 0 so Docker doesn't auto-restart
 
         try:
             response = client.messages.create(
@@ -702,6 +876,7 @@ def run_ceo_loop():
         # Track cost
         cost = estimate_cost(response.usage)
         daily_cost_usd += cost
+        _persist_budget(daily_cost_usd)
         log_event("api_call", {
             "cost_usd": round(cost, 4),
             "total_usd": round(daily_cost_usd, 4),
