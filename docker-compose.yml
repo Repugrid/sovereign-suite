@@ -30,6 +30,8 @@ services:
     container_name: sovereign-nodewatch-api
     volumes:
       - ./data/nodewatch:/app/data
+    env_file:
+      - .env
     environment:
       - API_KEY=nw-live-2026-sovereign
     ports:
@@ -41,6 +43,30 @@ services:
       resources:
         limits:
           memory: 512M
+
+  telegram-chat:
+    build:
+      context: ./services/telegram-chat
+    container_name: sovereign-telegram
+    env_file:
+      - .env
+    environment:
+      - NODEWATCH_API=http://sovereign-nodewatch-api:9081
+      - N8N_WEBHOOK=http://n8n:5678/webhook/telegram-commands
+      - SHARED_DIR=/data/shared
+      - CHAT_MODEL=claude-sonnet-4-20250514
+    volumes:
+      - ./shared:/data/shared:ro
+      - ./logs:/data/logs:ro
+      - ./data/telegram:/data
+    restart: unless-stopped
+    networks:
+      - sovereign-net
+      - repugrid-net
+    deploy:
+      resources:
+        limits:
+          memory: 256M
 
   webserver:
     image: nginx:alpine

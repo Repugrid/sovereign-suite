@@ -8,6 +8,7 @@ import sqlite3
 import json
 import logging
 import os
+import urllib.request
 from database import Database, ServerInfo, AlertConfig, MetricData
 
 # Configure logging
@@ -34,6 +35,24 @@ app.add_middleware(
 
 # Initialize database with persistent path
 db = Database(db_path="/app/data/nodewatch.db")
+
+# Telegram notifications for new servers
+TG_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+TG_CHAT = os.getenv("TELEGRAM_CHAT_ID", "")
+_known_servers: set[str] = set()
+
+
+def _tg_notify(text: str):
+    if not TG_TOKEN or not TG_CHAT:
+        return
+    try:
+        payload = json.dumps({"chat_id": TG_CHAT, "text": text, "parse_mode": "Markdown"}).encode()
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{TG_TOKEN}/sendMessage",
+            data=payload, headers={"Content-Type": "application/json"})
+        urllib.request.urlopen(req, timeout=10)
+    except Exception:
+        pass
 
 def verify_api_key(api_key: str = Depends(api_key_header)):
     """Verify API key for POST endpoints"""
@@ -113,6 +132,22 @@ async def receive_metrics(payload: AgentPayload):
         )
         
         logger.info(f"Stored metrics for server {payload.server_id}")
+
+        # Notify on NEW server registration
+        if payload.server_id not in _known_servers:
+            _known_servers.add(payload.server_id)
+            # Check if truly new (not just a restart)
+            info = db.get_server_info(payload.server_id)
+            if info and info.first_seen == info.last_seen:
+                _tg_notify(
+                    "🚀 *New server registered!*\n"
+                    f"ID: `{payload.server_id}`\n"
+                    f"Host: {hostname}\n"
+                    f"CPU: {payload.metrics.cpu_percent}% | "
+                    f"RAM: {payload.metrics.memory_percent}% | "
+                    f"Disk: {payload.metrics.disk_percent}%"
+                )
+
         return {"status": "success", "message": "Metrics stored successfully"}
         
     except Exception as e:

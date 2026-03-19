@@ -37,6 +37,33 @@ PRICING = {
     "cache_write": 3.75,
 }
 
+# ── Telegram ────────────────────────────────────────────────────────────
+TELEGRAM_BOT_TOKEN = os.getenv("TELEGRAM_BOT_TOKEN", "")
+TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
+
+
+def telegram_send(text: str, parse_mode: str = "Markdown") -> bool:
+    """Send a Telegram message to the Board. Silent on failure."""
+    if not TELEGRAM_BOT_TOKEN or not TELEGRAM_CHAT_ID:
+        return False
+    import urllib.request
+    try:
+        payload = json.dumps({
+            "chat_id": TELEGRAM_CHAT_ID,
+            "text": text[:4000],
+            "parse_mode": parse_mode,
+        }).encode()
+        req = urllib.request.Request(
+            f"https://api.telegram.org/bot{TELEGRAM_BOT_TOKEN}/sendMessage",
+            data=payload,
+            headers={"Content-Type": "application/json"},
+        )
+        urllib.request.urlopen(req, timeout=10)
+        return True
+    except Exception:
+        return False
+
+
 # ── State ───────────────────────────────────────────────────────────────
 daily_cost_usd = 0.0
 session_start = datetime.now(timezone.utc)
@@ -356,6 +383,8 @@ def handle_tool_call(tool_name: str, tool_input: dict) -> str:
             instruction=tool_input["instruction"],
             context=tool_input.get("context"),
         )
+        if "error" not in result:
+            telegram_send("🔧 *Worker spawned:* %s\nTask: `%s`" % (tool_input["role"], tool_input["task_id"]))
         return json.dumps(result)
 
     elif tool_name == "delegate_batch":
@@ -476,6 +505,8 @@ def handle_tool_call(tool_name: str, tool_input: dict) -> str:
                     "status": "sent",
                 }) + "\n")
             log_event("email_sent", {"to": tool_input["to"], "subject": tool_input["subject"]})
+            telegram_send("📧 *Email sent:* %s\nTo: `%s`\n(%d/10 today)" % (
+                tool_input["subject"], tool_input["to"], sent_today + 1))
             return json.dumps({"status": "sent", "message_id": result.get("MessageID"), "sent_today": sent_today + 1})
         except Exception as e:
             return json.dumps({"error": f"Email send failed: {e}"})
@@ -507,6 +538,7 @@ def run_ceo_loop():
     print(f"[Sovereign] CEO Agent starting — budget: ${DAILY_BUDGET}/day")
     print(f"[Sovereign] Model: {MODEL}")
     log_event("startup", {"model": MODEL, "budget": DAILY_BUDGET})
+    telegram_send("🟢 *Sovereign CEO online*\nBudget: $%.2f/day\nModel: %s" % (DAILY_BUDGET, MODEL))
 
     messages = [
         {
@@ -527,6 +559,7 @@ def run_ceo_loop():
         if daily_cost_usd >= DAILY_BUDGET:
             log_event("budget_exceeded", {"spent": daily_cost_usd})
             print(f"[Sovereign] BUDGET EXCEEDED (${daily_cost_usd:.2f}). Shutting down.")
+            telegram_send("🔴 *Budget exceeded!* $%.2f spent. CEO shutting down." % daily_cost_usd)
             break
 
         try:
@@ -556,6 +589,8 @@ def run_ceo_loop():
 
         if daily_cost_usd / DAILY_BUDGET >= ALERT_PCT:
             print(f"[Sovereign] WARNING: Budget at {(daily_cost_usd/DAILY_BUDGET)*100:.0f}%")
+            telegram_send("⚠️ *Budget warning:* $%.2f / $%.2f (%.0f%%)" % (
+                daily_cost_usd, DAILY_BUDGET, (daily_cost_usd/DAILY_BUDGET)*100))
 
         # Process response
         assistant_content = response.content
