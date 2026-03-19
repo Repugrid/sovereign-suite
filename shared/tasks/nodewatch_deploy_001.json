@@ -1,0 +1,8 @@
+{
+  "task_id": "nodewatch_deploy_001",
+  "role": "coder",
+  "instruction": "Deploy the Node-Watch API as a Docker container on port 9081. Use the files in /root/sovereign/shared/results/node-watch-api/.\n\nTasks:\n1. Copy the API files to a deployment directory\n2. Build and run the Docker container on port 9081\n3. Test that the API is responding at http://localhost:9081/health\n4. Verify the /api/v1/servers endpoint is accessible\n\nThe API should accept POST requests from monitoring agents and serve GET requests for the dashboard.\n\nCreate a deployment script that:\n- Stops any existing container on port 9081\n- Builds the new image\n- Runs the container with proper environment variables\n- Tests the endpoints\n- Reports success/failure\n\nWrite the output to /root/sovereign/shared/results/api_deployment_status.md with the container status and endpoint test results.",
+  "context": {},
+  "created_at": "2026-03-19T14:31:03.515317+00:00",
+  "status": "pending"
+}

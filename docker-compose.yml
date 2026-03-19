@@ -24,6 +24,24 @@ services:
         limits:
           memory: 2G
 
+  nodewatch-api:
+    build:
+      context: ./services/nodewatch-api
+    container_name: sovereign-nodewatch-api
+    volumes:
+      - ./data/nodewatch:/app/data
+    environment:
+      - API_KEY=nw-live-2026-sovereign
+    ports:
+      - "9081:9081"
+    restart: unless-stopped
+    networks:
+      - sovereign-net
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+
   webserver:
     image: nginx:alpine
     container_name: sovereign-web

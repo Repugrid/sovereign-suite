@@ -26,4 +26,4 @@ COPY scripts/ scripts/
 COPY agents/ agents/
 COPY workers/ workers/
 
-CMD ["python", "scripts/orchestrator.py"]
+CMD ["python", "-u", "scripts/orchestrator.py"]

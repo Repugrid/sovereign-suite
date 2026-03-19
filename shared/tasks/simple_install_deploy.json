@@ -1,0 +1,8 @@
+{
+  "task_id": "simple_install_deploy",
+  "role": "coder",
+  "instruction": "Simple task: Deploy the NodeWatch install script so it's downloadable.\n\n1. Read the file `shared/nodewatch_install.sh`\n2. Copy it to `/root/sovereign/deployments/install/nodewatch.sh` \n3. Make sure it has executable permissions\n\nThat's it. Don't overcomplicate this - just copy the file to the right location.",
+  "context": {},
+  "created_at": "2026-03-19T14:42:49.153381+00:00",
+  "status": "pending"
+}

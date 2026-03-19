@@ -1,0 +1,8 @@
+{
+  "task_id": "find_hetzner_prospects",
+  "role": "researcher",
+  "instruction": "Find 5 real people who run Hetzner servers for Node-Watch beta outreach.\n\nRequirements:\n1. Must be REAL individuals (not companies or generic emails)\n2. Must have evidence they actually use Hetzner servers\n3. Must have valid contact information (email from GitHub profile, personal website, etc.)\n4. NO generic company addresses like info@, support@, sales@\n5. Look for indie developers, small tech companies, DevOps engineers who blog/tweet about Hetzner\n\nSearch sources:\n- GitHub users with Hetzner-related repositories\n- Dev blogs mentioning Hetzner experiences\n- Twitter/X posts about Hetzner servers\n- Reddit posts in r/hetzner or tech subreddits\n- Personal websites of developers who mention using Hetzner\n\nFor each prospect, provide:\n- Name\n- Email (from GitHub profile, website, or professional social media)\n- Hetzner connection (GitHub repo, blog post, tweet, etc.)\n- Brief context (what they do, why they'd care about monitoring)\n\nFocus on quality over quantity - these will be our first real customers.",
+  "context": {},
+  "created_at": "2026-03-19T14:40:05.663142+00:00",
+  "status": "pending"
+}

@@ -40,6 +40,7 @@ PRICING = {
 # ── State ───────────────────────────────────────────────────────────────
 daily_cost_usd = 0.0
 session_start = datetime.now(timezone.utc)
+task_check_counts: dict[str, int] = {}  # Track how many times each task was polled
 
 
 def estimate_cost(usage: anthropic.types.Usage) -> float:
@@ -365,10 +366,21 @@ def handle_tool_call(tool_name: str, tool_input: dict) -> str:
         return json.dumps(results)
 
     elif tool_name == "check_task":
-        result = check_task_result(tool_input["task_id"])
+        tid = tool_input["task_id"]
+        result = check_task_result(tid)
         if result:
+            task_check_counts.pop(tid, None)
             return json.dumps(result)
-        return json.dumps({"status": "pending", "message": "Task not yet completed. Worker may still be running."})
+        # Anti-polling: max 3 checks per task, then tell CEO to move on
+        task_check_counts[tid] = task_check_counts.get(tid, 0) + 1
+        if task_check_counts[tid] > 3:
+            return json.dumps({
+                "status": "timeout",
+                "message": f"Task '{tid}' checked {task_check_counts[tid]} times with no result. "
+                           "The worker likely failed or is stuck. STOP polling this task. "
+                           "Move on to the next action from your directive. "
+                           "If the task is critical, spawn a NEW worker with a simpler instruction."
+            })
 
     elif tool_name == "list_workers":
         workers = list_active_workers()
@@ -500,9 +512,12 @@ def run_ceo_loop():
         {
             "role": "user",
             "content": (
-                "You are now online. Check your available tools, review the shared workspace, "
-                "and report your status. Then identify the highest-ROI task you can execute right now "
-                "for our business units (RepuGrid & Praxis-Reputation)."
+                "You are now online. This is a FRESH start — ignore any previous context.\n\n"
+                "Step 1: list_files on shared/inbox/ to find your directives.\n"
+                "Step 2: Read the directive file (there is exactly ONE active directive).\n"
+                "Step 3: Execute it immediately. The directive contains everything you need.\n\n"
+                "Do NOT read old master_log.md first. Do NOT check for old tasks. "
+                "Read the directive and start building."
             ),
         }
     ]
@@ -557,12 +572,13 @@ def run_ceo_loop():
             log_event("cycle_complete", {"cost_total": round(daily_cost_usd, 4)})
             print(f"[Sovereign] Cycle complete. Spent: ${daily_cost_usd:.4f}")
             # Wait before next autonomous cycle
-            time.sleep(300)  # 5 min between autonomous cycles
+            time.sleep(120)  # 2 min between autonomous cycles
             messages.append({
                 "role": "user",
                 "content": (
-                    "5 minutes have passed. Check budget status, review any updates in "
-                    "the shared workspace, and decide on your next action."
+                    "Next cycle. Check if any delegated workers completed (look in shared/results/ for new files). "
+                    "Check budget. Then execute the next concrete step from your active directive. "
+                    "Do NOT write summaries. Do NOT enter maintenance mode. Ship code."
                 ),
             })
             continue

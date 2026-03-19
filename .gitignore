@@ -3,3 +3,10 @@ logs/
 __pycache__/
 *.pyc
 node_modules/
+data/
+*.db
+*.sqlite
+config/.htpasswd
+config/.data_room_password
+deployments/sovereign-suite-asset-package.tar.gz
+shared/shared/

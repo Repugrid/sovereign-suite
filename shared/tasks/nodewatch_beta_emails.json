@@ -1,0 +1,8 @@
+{
+  "task_id": "nodewatch_beta_emails",
+  "role": "marketer",
+  "instruction": "Write 3 professional beta outreach emails for Node-Watch based on the prospect research.\n\nTarget these specific prospects:\n1. Bastian Gruber (bastian@bastiangruber.ca) - Self-hosts on Hetzner/OVH, wrote about \"Mass quitting Apple\"\n2. Simon Elsbrock (GitHub @elsbrock) - Created Server Radar for Hetzner monitoring  \n3. NixOS/Erethon contributor - Manages build infrastructure\n\nEmail requirements:\n- Professional, not salesy\n- Emphasize it's a REAL working product (not beta/vaporware)\n- Include actual install command: `curl -sSL http://37.27.189.23:9080/install/nodewatch.sh | bash`\n- Mention it's currently monitoring live servers\n- Reference their specific Hetzner use case\n- Offer free monitoring during beta\n- From: hello@repugrid.com\n- No fake testimonials or inflated claims\n- Max 200 words per email\n\nWrite the email content only - I'll handle the actual sending.",
+  "context": {},
+  "created_at": "2026-03-19T14:45:02.733493+00:00",
+  "status": "pending"
+}

@@ -1,0 +1,8 @@
+{
+  "task_id": "deploy_live_api",
+  "role": "coder",
+  "instruction": "Deploy the Node-Watch API to port 9081 immediately.\n\nThe code exists at:\n- `shared/results/node-watch-api/main.py` \n- `shared/results/node-watch-api/database.py`\n- `shared/results/node-watch-api/requirements.txt`\n\nTasks:\n1. Read these 3 files from shared/results/node-watch-api/\n2. Deploy the API so it runs on http://localhost:9081\n3. Use Docker or direct Python deployment - whatever works fastest\n4. Verify the API responds to GET /health\n5. The API needs to accept POST /api/v1/metrics from monitoring agents\n\nThe landing page already promises this API is live. Make it actually live.",
+  "context": {},
+  "created_at": "2026-03-19T14:48:21.873244+00:00",
+  "status": "pending"
+}

@@ -1,0 +1,8 @@
+{
+  "task_id": "nodewatch_real_landing",
+  "role": "marketer",
+  "instruction": "Create an updated Node-Watch landing page that reflects we have a REAL working product (not vaporware).\n\nThe MVP is actually deployed and working:\n- API running on port 9081 \n- Agent running on repugrid-central-5ffc50c9 server\n- Real metrics being collected every 60s\n\nRequirements:\n1. Remove all \"coming soon\" language\n2. Show it's a REAL product that's currently monitoring servers\n3. Include working install command: `curl -sSL http://37.27.189.23:9080/install/nodewatch.sh | bash`\n4. Show real-time status of our own server (repugrid-central-5ffc50c9) as social proof\n5. Have clear \"Get Started\" section \n6. Professional design using Tailwind CSS\n7. Include dashboard link to show live metrics\n8. No fake testimonials or inflated claims\n9. Mention it's specifically designed for Hetzner servers\n10. Show actual server metrics as demo (CPU, RAM, disk)\n\nKeep it factual and professional. The product WORKS - let that speak for itself.",
+  "context": {},
+  "created_at": "2026-03-19T14:38:10.793375+00:00",
+  "status": "pending"
+}

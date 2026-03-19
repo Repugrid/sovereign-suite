@@ -1,0 +1,8 @@
+{
+  "task_id": "nodewatch_dashboard_001",
+  "role": "coder",
+  "instruction": "Create a single-page Node-Watch dashboard. Build in /root/sovereign/shared/results/node-watch-dashboard/:\n\n1. index.html - Complete dashboard page that:\n   - Uses Tailwind CSS via CDN for styling\n   - Uses Chart.js via CDN for metrics visualization\n   - Works without build step (vanilla JS only)\n   - Shows all servers in a responsive grid with status indicators (green/yellow/red)\n   - Auto-refreshes every 30 seconds\n   - Each server card shows: hostname, status, last seen, current CPU/RAM/disk percentages\n   - Click on server card opens detailed view with charts for last 24h\n   - API calls to http://localhost:9081/api/v1/\n\n2. Design requirements:\n   - Clean, professional interface\n   - Status indicators: green (healthy), yellow (warning), red (critical)\n   - Real-time updates with loading indicators\n   - Responsive design (mobile-friendly)\n   - Error handling for API failures\n   - No authentication required (read-only dashboard)\n\n3. Dashboard features:\n   - Server overview grid\n   - Real-time status updates\n   - Detailed metrics charts (CPU, Memory, Disk, Load)\n   - Process list display\n   - Network usage tracking\n   - Alert history (future enhancement placeholder)\n\nUse modern JS (fetch API, async/await). Include proper error handling and loading states. Production-ready code that works immediately when the API is running.\"",
+  "context": {},
+  "created_at": "2026-03-19T14:24:48.054153+00:00",
+  "status": "pending"
+}

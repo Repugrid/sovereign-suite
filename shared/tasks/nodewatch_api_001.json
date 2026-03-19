@@ -1,0 +1,8 @@
+{
+  "task_id": "nodewatch_api_001",
+  "role": "coder",
+  "instruction": "Create a complete Node-Watch FastAPI backend. Build /root/sovereign/shared/results/node-watch-api/ with these files:\n\n1. main.py - FastAPI app with endpoints:\n   - POST /api/v1/metrics - receive/store metric payloads in SQLite\n   - GET /api/v1/servers - list all servers with last-seen timestamps\n   - GET /api/v1/servers/{server_id}/metrics?hours=24 - return time-series metrics\n   - GET /api/v1/servers/{server_id}/status - health status (healthy/warning/critical based on thresholds)\n   - POST /api/v1/alerts/configure - set alert thresholds (store in DB)\n   - GET /health - health check\n   - Simple API key auth via X-API-Key header\n\n2. database.py - SQLite schema + operations:\n   - metrics table: server_id, timestamp, cpu_percent, memory_percent, disk_percent, load_avg, network_sent, network_recv, processes_json\n   - servers table: server_id, first_seen, last_seen, hostname\n   - alerts table: server_id, metric_name, threshold, email\n\n3. requirements.txt - FastAPI, uvicorn, sqlite3 (built-in)\n\n4. Dockerfile - Multi-stage build for production deployment\n\n5. docker-compose.yml - Service definition for port 9081\n\nStatus logic:\n- healthy: CPU <80%, RAM <85%, disk <90%, last_seen <5min\n- warning: One metric exceeds threshold OR last_seen 5-15min  \n- critical: Multiple metrics exceed OR last_seen >15min\n\nHandle all errors gracefully. Auto-create SQLite DB on startup. Include proper logging. No authentication for GET endpoints (read-only). Production-ready code.",
+  "context": {},
+  "created_at": "2026-03-19T14:20:47.610197+00:00",
+  "status": "pending"
+}

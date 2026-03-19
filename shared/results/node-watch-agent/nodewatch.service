@@ -1,0 +1,42 @@
+[Unit]
+Description=NodeWatch System Monitoring Agent
+Documentation=https://github.com/nodewatch/agent
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=60
+StartLimitBurst=3
+
+[Service]
+Type=simple
+User=nodewatch
+Group=nodewatch
+ExecStart=/usr/bin/python3 /opt/nodewatch/monitor.py
+Restart=always
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=nodewatch
+
+# Security settings
+NoNewPrivileges=yes
+PrivateTmp=yes
+ProtectSystem=strict
+ProtectHome=yes
+ReadWritePaths=/var/log /opt/nodewatch
+ProtectKernelTunables=yes
+ProtectKernelModules=yes
+ProtectControlGroups=yes
+
+# Resource limits
+MemoryMax=100M
+TasksMax=50
+
+# Environment variables (can be overridden)
+Environment=NODEWATCH_INTERVAL=60
+Environment=NODEWATCH_LOG_LEVEL=INFO
+Environment=NODEWATCH_MAX_BUFFER_SIZE=100
+Environment=NODEWATCH_RETRY_ATTEMPTS=3
+Environment=NODEWATCH_RETRY_DELAY=5
+
+[Install]
+WantedBy=multi-user.target

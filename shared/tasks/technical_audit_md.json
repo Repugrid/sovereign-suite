@@ -1,12 +1,12 @@
 {
   "task_id": "technical_audit_md",
   "role": "coder",
-  "instruction": "Write a deployment-ready technical audit document for Sovereign-Node-Watch covering: Technology stack summary (what's built, what's planned), Deployment architecture (Docker, Hetzner Cloud, CI/CD pipeline), Security audit checklist (GDPR, encryption, auth), Scalability assessment (users 100 \u2192 1,000 \u2192 10,000), Technical debt assessment (current: zero, since it's greenfield), IP ownership statement (all code AI-generated, no license encumbrances), Estimated developer hours to reach MVP: break down by component. This should read like a professional technical due diligence document that gives a buyer confidence in the technical foundation. Save as shared/results/DATA_ROOM/06_TECHNICAL_AUDIT.md",
+  "instruction": "Write a deployment-ready technical audit that covers:\n- Technology stack summary (what's built, what's planned)\n- Deployment architecture (Docker, Hetzner Cloud, CI/CD pipeline)\n- Security audit checklist (GDPR, encryption, auth)\n- Scalability assessment (users 100 \u2192 1,000 \u2192 10,000)\n- Technical debt assessment (current: zero, since it's greenfield)\n- IP ownership statement (all code AI-generated, no license encumbrances)\n- Estimated developer hours to reach MVP: break down by component\n\nBased on the existing architecture documentation in `shared/results/architecture_node_watch_final.md`, create a professional technical audit that a CTO buyer would want to see.\n\nSave to `shared/results/DATA_ROOM/06_TECHNICAL_AUDIT.md`",
   "context": {
-    "product": "AI-driven Hetzner monitoring",
-    "stage": "concept-validated",
-    "tech_stack": "Go agents, Python/FastAPI platform, InfluxDB, PostgreSQL"
+    "audience": "technical buyer",
+    "focus": "deployment readiness",
+    "based_on": "architecture_node_watch_final.md"
   },
-  "created_at": "2026-03-19T10:49:47.952329+00:00",
+  "created_at": "2026-03-19T13:45:34.382770+00:00",
   "status": "pending"
 }

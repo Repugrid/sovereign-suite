@@ -1,0 +1,8 @@
+{
+  "task_id": "deploy_nodewatch_installer",
+  "role": "coder",
+  "instruction": "Create a proper install endpoint for NodeWatch.\n\nThe install script exists at `shared/results/node-watch-agent/install.sh`. I need to deploy it so users can run:\n`curl -sSL http://37.27.189.23:9080/install/nodewatch.sh | bash`\n\nTasks:\n1. Read the install script from `shared/results/node-watch-agent/install.sh`\n2. Deploy it at the webserver so it's accessible at `/install/nodewatch.sh`\n3. Ensure it has proper MIME type (text/plain) and executable permissions\n4. The script already embeds monitor.py, so no separate deployment needed\n5. Test that the URL is accessible\n\nThe script should work as a one-liner installer that users can curl and pipe to bash.",
+  "context": {},
+  "created_at": "2026-03-19T14:39:40.387603+00:00",
+  "status": "pending"
+}

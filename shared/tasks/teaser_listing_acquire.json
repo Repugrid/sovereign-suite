@@ -1,14 +1,12 @@
 {
   "task_id": "teaser_listing_acquire",
   "role": "marketer",
-  "instruction": "Write a compelling marketplace listing for Acquire.com that follows their platform format for Sovereign-Node-Watch. Include: Listing Title (max 80 chars), One-liner description, Business Model: SaaS, Monthly Revenue: Pre-revenue (concept-validated), Asking Price: \u20ac1,500,000, Key highlights (5 bullet points), Detailed description (500-800 words), What's included in the sale, Growth opportunities, Reason for selling: \"AI-native holding company divesting standalone asset\". Emphasize: Built for $6, validated market, complete technical + marketing foundation. This should make a buyer want to click \"Purchase\" immediately. Study the tone and format of successful Acquire.com listings. Save as shared/results/DATA_ROOM/07_TEASER_LISTING.md",
+  "instruction": "Write a compelling marketplace listing for Acquire.com that follows their format:\n\n- Listing Title (max 80 chars) - something catchy about AI-powered monitoring\n- One-liner description\n- Business Model: SaaS\n- Monthly Revenue: Pre-revenue (concept-validated)\n- Asking Price: \u20ac1,500,000\n- Key highlights (5 bullet points that make buyers want this)\n- Detailed description (500-800 words) - tell the complete story\n- What's included in the sale\n- Growth opportunities\n- Reason for selling: \"AI-native holding company divesting standalone asset\"\n\nKey selling points to emphasize:\n- Built for under $20, validated \u20ac1M+ ARR market\n- Complete technical + marketing foundation (no development needed)\n- First-mover advantage in AI-powered SMB monitoring for Hetzner\n- Ready-to-launch with proven customer demand\n\nUse the market research and business case data from existing files to make compelling arguments. This needs to make a buyer immediately want to purchase.\n\nSave to `shared/results/DATA_ROOM/07_TEASER_LISTING.md`",
   "context": {
-    "product": "Sovereign-Node-Watch",
-    "valuation": "\u20ac1.5M",
-    "investment": "$6 in AI development",
-    "market": "Hetzner server monitoring",
-    "status": "concept-validated with complete deliverables"
+    "platform": "Acquire.com",
+    "asking_price": "\u20ac1,500,000",
+    "stage": "pre-revenue but validated"
   },
-  "created_at": "2026-03-19T10:50:00.211877+00:00",
+  "created_at": "2026-03-19T13:45:45.773635+00:00",
   "status": "pending"
 }
