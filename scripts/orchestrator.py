@@ -292,6 +292,45 @@ def build_mcp_tools() -> list[dict]:
                 "properties": {},
             },
         },
+        # ── GitHub Tools ─────────────────────────────────────────────
+        {
+            "name": "github_create_discussion",
+            "description": "Create a GitHub Discussion in the sovereign-suite repo. Use for announcements, show & tell, and community engagement. Category must be one of: Announcements, General, Ideas, Q&A, Show and tell.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "title": {"type": "string", "description": "Discussion title"},
+                    "body": {"type": "string", "description": "Discussion body (Markdown)"},
+                    "category": {"type": "string", "description": "Category: Announcements, General, Ideas, Q&A, Show and tell"},
+                },
+                "required": ["title", "body", "category"],
+            },
+        },
+        {
+            "name": "github_create_release",
+            "description": "Create a GitHub Release with a tag. Use for version milestones.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "tag": {"type": "string", "description": "Version tag (e.g. v0.1.0)"},
+                    "name": {"type": "string", "description": "Release title"},
+                    "body": {"type": "string", "description": "Release notes (Markdown)"},
+                },
+                "required": ["tag", "name", "body"],
+            },
+        },
+        {
+            "name": "github_post_comment",
+            "description": "Post a comment on a GitHub issue or discussion.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "issue_number": {"type": "integer", "description": "Issue or PR number"},
+                    "body": {"type": "string", "description": "Comment body (Markdown)"},
+                },
+                "required": ["issue_number", "body"],
+            },
+        },
         # ── Email Tools ──────────────────────────────────────────────
         {
             "name": "send_email",
@@ -523,6 +562,90 @@ def handle_tool_call(tool_name: str, tool_input: dict) -> str:
                     if today in line:
                         sent_today += 1
         return json.dumps({"sent_today": sent_today, "daily_limit": 10, "total_all_time": total})
+
+    # ── GitHub Tools ────────────────────────────────────────────
+    elif tool_name in ("github_create_discussion", "github_create_release", "github_post_comment"):
+        import urllib.request as urllib2
+        gh_token = os.getenv("GITHUB_TOKEN", "")
+        gh_repo = os.getenv("GITHUB_REPO", "Repugrid/sovereign-suite")
+        if not gh_token:
+            return json.dumps({"error": "GITHUB_TOKEN not configured"})
+
+        gh_headers = {
+            "Authorization": f"token {gh_token}",
+            "Accept": "application/vnd.github+json",
+            "Content-Type": "application/json",
+        }
+
+        try:
+            if tool_name == "github_create_release":
+                payload = json.dumps({
+                    "tag_name": tool_input["tag"],
+                    "name": tool_input["name"],
+                    "body": tool_input["body"],
+                    "draft": False,
+                    "prerelease": "alpha" in tool_input["tag"] or "beta" in tool_input["tag"],
+                }).encode()
+                req = urllib2.Request(
+                    f"https://api.github.com/repos/{gh_repo}/releases",
+                    data=payload, headers=gh_headers,
+                )
+                with urllib2.urlopen(req, timeout=15) as resp:
+                    result = json.loads(resp.read())
+                telegram_send("📦 *GitHub Release:* %s\n%s" % (tool_input["name"], result.get("html_url", "")))
+                return json.dumps({"status": "created", "url": result.get("html_url"), "id": result.get("id")})
+
+            elif tool_name == "github_create_discussion":
+                # Discussions require GraphQL API
+                # First get repo ID and category ID
+                query = '''query { repository(owner:"%s", name:"%s") {
+                    id
+                    discussionCategories(first:10) { nodes { id name } }
+                }}''' % tuple(gh_repo.split("/"))
+                req = urllib2.Request(
+                    "https://api.github.com/graphql",
+                    data=json.dumps({"query": query}).encode(),
+                    headers=gh_headers,
+                )
+                with urllib2.urlopen(req, timeout=15) as resp:
+                    gql = json.loads(resp.read())
+
+                repo_data = gql.get("data", {}).get("repository", {})
+                repo_id = repo_data.get("id")
+                categories = {c["name"]: c["id"] for c in repo_data.get("discussionCategories", {}).get("nodes", [])}
+                cat_id = categories.get(tool_input["category"])
+
+                if not cat_id:
+                    return json.dumps({"error": f"Category '{tool_input['category']}' not found. Available: {list(categories.keys())}"})
+
+                mutation = '''mutation {
+                    createDiscussion(input: {repositoryId: "%s", categoryId: "%s", title: "%s", body: "%s"}) {
+                        discussion { url number }
+                    }
+                }''' % (repo_id, cat_id, tool_input["title"].replace('"', '\\"'), tool_input["body"].replace('"', '\\"').replace("\n", "\\n"))
+                req = urllib2.Request(
+                    "https://api.github.com/graphql",
+                    data=json.dumps({"query": mutation}).encode(),
+                    headers=gh_headers,
+                )
+                with urllib2.urlopen(req, timeout=15) as resp:
+                    result = json.loads(resp.read())
+                disc = result.get("data", {}).get("createDiscussion", {}).get("discussion", {})
+                telegram_send("💬 *GitHub Discussion:* %s\n%s" % (tool_input["title"], disc.get("url", "")))
+                return json.dumps({"status": "created", "url": disc.get("url"), "number": disc.get("number")})
+
+            elif tool_name == "github_post_comment":
+                payload = json.dumps({"body": tool_input["body"]}).encode()
+                req = urllib2.Request(
+                    f"https://api.github.com/repos/{gh_repo}/issues/{tool_input['issue_number']}/comments",
+                    data=payload, headers=gh_headers,
+                )
+                with urllib2.urlopen(req, timeout=15) as resp:
+                    result = json.loads(resp.read())
+                return json.dumps({"status": "created", "url": result.get("html_url"), "id": result.get("id")})
+
+        except Exception as e:
+            return json.dumps({"error": f"GitHub API failed: {e}"})
 
     return f"Unknown tool: {tool_name}"
 
