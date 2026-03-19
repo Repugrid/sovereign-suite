@@ -6,6 +6,7 @@
     <title>Node-Watch - Real-Time Server Monitoring for Hetzner</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/feather-icons"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body class="bg-gray-50">
     <!-- Header -->
@@ -19,8 +20,8 @@
                     <h1 class="text-xl font-bold text-gray-900">Node-Watch</h1>
                 </div>
                 <nav class="flex space-x-6">
+                    <a href="#live" class="text-gray-600 hover:text-gray-900">Live Stats</a>
                     <a href="#features" class="text-gray-600 hover:text-gray-900">Features</a>
-                    <a href="#demo" class="text-gray-600 hover:text-gray-900">Live Demo</a>
                     <a href="#install" class="text-gray-600 hover:text-gray-900">Get Started</a>
                 </nav>
             </div>
@@ -33,72 +34,67 @@
             <div class="text-center">
                 <div class="inline-flex items-center bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium mb-6">
                     <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                    Live and Monitoring
+                    <span id="hero-status">Connecting...</span>
                 </div>
                 <h2 class="text-4xl font-bold text-gray-900 sm:text-5xl mb-6">
                     Real-Time Server Monitoring<br>
                     <span class="text-blue-600">Built for Hetzner</span>
                 </h2>
                 <p class="text-xl text-gray-600 max-w-2xl mx-auto mb-8">
-                    Professional server monitoring that's actually deployed and working. 
-                    Monitor your Hetzner servers with real-time metrics collected every 60 seconds.
+                    Not a mockup. Not a prototype. A real monitoring system collecting live metrics
+                    from real servers every 60 seconds. Install in one command.
                 </p>
                 <div class="flex flex-col sm:flex-row gap-4 justify-center">
                     <a href="#install" class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 rounded-lg font-semibold transition-colors">
-                        Start Monitoring Now
+                        Start Monitoring Free
                     </a>
-                    <a href="#demo" class="border border-gray-300 hover:border-gray-400 text-gray-700 px-8 py-3 rounded-lg font-semibold transition-colors">
-                        View Live Demo
+                    <a href="#live" class="border border-gray-300 hover:border-gray-400 text-gray-700 px-8 py-3 rounded-lg font-semibold transition-colors">
+                        See Live Data Below
                     </a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Live Status Proof -->
-    <section class="bg-gray-900 text-white py-12">
+    <!-- LIVE STATS FROM BETA NODES -->
+    <section id="live" class="bg-gray-900 text-white py-16">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-8">
-                <h3 class="text-2xl font-bold mb-2">Currently Monitoring Our Own Infrastructure</h3>
-                <p class="text-gray-300">Real data from our production server - updated every 60 seconds</p>
+            <div class="text-center mb-10">
+                <h3 class="text-3xl font-bold mb-2">Live Stats from Beta Nodes</h3>
+                <p class="text-gray-400">Real data. Real servers. Auto-refreshing every 30 seconds.</p>
             </div>
-            
-            <div class="bg-gray-800 rounded-lg p-6 max-w-4xl mx-auto">
-                <div class="flex items-center justify-between mb-4">
-                    <div class="flex items-center">
-                        <div class="w-3 h-3 bg-green-500 rounded-full mr-3 animate-pulse"></div>
-                        <span class="font-semibold">repugrid-central-5ffc50c9</span>
-                    </div>
-                    <span class="text-sm text-gray-400">Last updated: Live</span>
+
+            <!-- Server Cards -->
+            <div id="server-cards" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+                <div class="bg-gray-800 rounded-lg p-6 animate-pulse">
+                    <div class="h-4 bg-gray-700 rounded w-3/4 mb-4"></div>
+                    <div class="h-8 bg-gray-700 rounded w-1/2"></div>
                 </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                    <div class="bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-300">CPU Usage</p>
-                                <p class="text-2xl font-bold">23.5%</p>
-                            </div>
-                            <i data-feather="cpu" class="w-8 h-8 text-blue-400"></i>
-                        </div>
+            </div>
+
+            <!-- Live Chart -->
+            <div class="bg-gray-800 rounded-xl p-6 max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-4">
+                    <h4 class="text-lg font-semibold">CPU & Memory — Last 2 Hours</h4>
+                    <span id="chart-update" class="text-sm text-gray-400"></span>
+                </div>
+                <canvas id="metricsChart" height="200"></canvas>
+            </div>
+
+            <!-- Counter -->
+            <div class="mt-8 text-center">
+                <div class="inline-flex items-center space-x-8">
+                    <div>
+                        <span id="total-nodes" class="text-3xl font-bold text-blue-400">-</span>
+                        <p class="text-sm text-gray-400 mt-1">Active Nodes</p>
                     </div>
-                    <div class="bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-300">Memory</p>
-                                <p class="text-2xl font-bold">2.1/8 GB</p>
-                            </div>
-                            <i data-feather="hard-drive" class="w-8 h-8 text-green-400"></i>
-                        </div>
+                    <div>
+                        <span id="total-readings" class="text-3xl font-bold text-green-400">-</span>
+                        <p class="text-sm text-gray-400 mt-1">Metrics Today</p>
                     </div>
-                    <div class="bg-gray-700 rounded-lg p-4">
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-sm text-gray-300">Disk Usage</p>
-                                <p class="text-2xl font-bold">45.2 GB</p>
-                            </div>
-                            <i data-feather="database" class="w-8 h-8 text-yellow-400"></i>
-                        </div>
+                    <div>
+                        <span id="uptime-pct" class="text-3xl font-bold text-yellow-400">-</span>
+                        <p class="text-sm text-gray-400 mt-1">Uptime</p>
                     </div>
                 </div>
             </div>
@@ -109,56 +105,51 @@
     <section id="features" class="py-16 bg-white">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-gray-900 mb-4">Production-Ready Monitoring</h3>
-                <p class="text-lg text-gray-600">Deployed, tested, and actively monitoring real servers</p>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">What You Get</h3>
+                <p class="text-lg text-gray-600">Everything you saw above is what your servers get too</p>
             </div>
-            
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
                 <div class="text-center">
                     <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                         <i data-feather="zap" class="w-6 h-6 text-blue-600"></i>
                     </div>
-                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Real-Time Metrics</h4>
-                    <p class="text-gray-600">Live data collection every 60 seconds with API running on port 9081</p>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-2">60s Collection</h4>
+                    <p class="text-gray-600">CPU, RAM, disk, network, top processes. Every minute. Stored and queryable via REST API.</p>
                 </div>
                 <div class="text-center">
                     <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mx-auto mb-4">
-                        <i data-feather="server" class="w-6 h-6 text-green-600"></i>
+                        <i data-feather="terminal" class="w-6 h-6 text-green-600"></i>
                     </div>
-                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Hetzner Optimized</h4>
-                    <p class="text-gray-600">Specifically designed and tested for Hetzner Cloud infrastructure</p>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-2">One Command Install</h4>
+                    <p class="text-gray-600">curl | bash. Installs psutil, deploys agent, creates systemd service. Done in 30 seconds.</p>
                 </div>
                 <div class="text-center">
                     <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mx-auto mb-4">
                         <i data-feather="shield" class="w-6 h-6 text-purple-600"></i>
                     </div>
-                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Production Tested</h4>
-                    <p class="text-gray-600">Already monitoring live servers - not vaporware or beta software</p>
+                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Offline Buffer</h4>
+                    <p class="text-gray-600">Connection lost? Agent buffers up to 100 readings and sends them when reconnected.</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Live Demo Section -->
-    <section id="demo" class="py-16 bg-gray-50">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-gray-900 mb-4">See It In Action</h3>
-                <p class="text-lg text-gray-600">View live metrics from our production dashboard</p>
+    <!-- API Section -->
+    <section class="py-12 bg-gray-50">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <h3 class="text-2xl font-bold text-gray-900 mb-2">Open REST API</h3>
+                <p class="text-gray-600">Query your server metrics programmatically</p>
             </div>
-            
-            <div class="bg-white rounded-lg shadow-lg p-8 text-center">
-                <div class="mb-6">
-                    <i data-feather="monitor" class="w-16 h-16 text-blue-600 mx-auto mb-4"></i>
-                    <h4 class="text-xl font-semibold text-gray-900 mb-2">Live Dashboard</h4>
-                    <p class="text-gray-600 mb-6">Access real-time metrics and historical data from our monitoring dashboard</p>
-                </div>
-                
-                <a href="http://37.27.189.23:9081/dashboard" target="_blank" 
-                   class="inline-flex items-center bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors">
-                    <i data-feather="external-link" class="w-4 h-4 mr-2"></i>
-                    Open Live Dashboard
-                </a>
+            <div class="bg-gray-900 rounded-lg p-6 text-sm font-mono">
+                <div class="text-gray-400 mb-2"># List all monitored servers</div>
+                <div class="text-green-400 mb-4">GET /api/v1/servers</div>
+                <div class="text-gray-400 mb-2"># Get metrics for last 24h</div>
+                <div class="text-green-400 mb-4">GET /api/v1/servers/{id}/metrics?hours=24</div>
+                <div class="text-gray-400 mb-2"># Get current health status</div>
+                <div class="text-green-400 mb-4">GET /api/v1/servers/{id}/status</div>
+                <div class="text-gray-400 mb-2"># Try it right now:</div>
+                <div class="text-yellow-400">curl http://37.27.189.23:9081/api/v1/servers | jq</div>
             </div>
         </div>
     </section>
@@ -167,64 +158,57 @@
     <section id="install" class="py-16 bg-white">
         <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="text-center mb-12">
-                <h3 class="text-3xl font-bold text-gray-900 mb-4">Get Started in Minutes</h3>
-                <p class="text-lg text-gray-600">Simple one-command installation on your Hetzner server</p>
+                <h3 class="text-3xl font-bold text-gray-900 mb-4">Get Started in 30 Seconds</h3>
+                <p class="text-lg text-gray-600">Free during beta. One command. Real monitoring.</p>
             </div>
-            
+
             <div class="bg-gray-900 rounded-lg p-6 mb-8">
                 <div class="flex items-center justify-between mb-4">
-                    <span class="text-gray-300 font-medium">Installation Command</span>
-                    <button onclick="copyToClipboard()" class="text-blue-400 hover:text-blue-300 text-sm">
-                        <i data-feather="copy" class="w-4 h-4 inline mr-1"></i>
+                    <span class="text-gray-300 font-medium">Run on your Hetzner server (as root):</span>
+                    <button onclick="copyInstall()" id="copy-btn" class="text-blue-400 hover:text-blue-300 text-sm cursor-pointer">
                         Copy
                     </button>
                 </div>
-                <code id="install-command" class="text-green-400 font-mono text-lg block">
-                    curl -sSL http://37.27.189.23:9080/install/nodewatch.sh | bash
-                </code>
+                <code id="install-cmd" class="text-green-400 font-mono text-lg block">curl -sSL http://37.27.189.23:9080/install/nodewatch.sh | bash</code>
             </div>
-            
+
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
                 <div class="flex items-start">
-                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-1 shrink-0">
                         <span class="text-blue-600 font-semibold">1</span>
                     </div>
                     <div>
-                        <h5 class="font-semibold text-gray-900 mb-1">Run Install Command</h5>
-                        <p class="text-gray-600 text-sm">Execute the command on your Hetzner server</p>
+                        <h5 class="font-semibold text-gray-900 mb-1">Install</h5>
+                        <p class="text-gray-600 text-sm">Installs psutil, deploys agent to /opt/nodewatch/, creates systemd service</p>
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-1 shrink-0">
                         <span class="text-blue-600 font-semibold">2</span>
                     </div>
                     <div>
-                        <h5 class="font-semibold text-gray-900 mb-1">Agent Starts</h5>
-                        <p class="text-gray-600 text-sm">Monitoring begins automatically</p>
+                        <h5 class="font-semibold text-gray-900 mb-1">Metrics Flow</h5>
+                        <p class="text-gray-600 text-sm">Agent starts collecting CPU, RAM, disk, network every 60s</p>
                     </div>
                 </div>
                 <div class="flex items-start">
-                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-1">
+                    <div class="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center mr-3 mt-1 shrink-0">
                         <span class="text-blue-600 font-semibold">3</span>
                     </div>
                     <div>
-                        <h5 class="font-semibold text-gray-900 mb-1">View Metrics</h5>
-                        <p class="text-gray-600 text-sm">Access dashboard for live data</p>
+                        <h5 class="font-semibold text-gray-900 mb-1">Your Server Appears Here</h5>
+                        <p class="text-gray-600 text-sm">See it live in the "Beta Nodes" section above</p>
                     </div>
                 </div>
             </div>
-            
+
             <div class="text-center">
-                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-6">
-                    <p class="text-blue-800 mb-4">
-                        <strong>Ready to monitor your Hetzner servers?</strong><br>
-                        Join the servers already being monitored with Node-Watch.
+                <div class="bg-blue-50 border border-blue-200 rounded-lg p-6">
+                    <p class="text-blue-800">
+                        <strong>Free during beta.</strong> Your server will appear in the Live Stats section above.
+                        Help us prove that autonomous AI can build real infrastructure tools.
                     </p>
                 </div>
-                <a href="#install" onclick="scrollToInstall()" 
-                   class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
-                    Start Monitoring Your Servers
-                </a>
             </div>
         </div>
     </section>
@@ -238,42 +222,193 @@
                         <i data-feather="activity" class="w-4 h-4 text-white"></i>
                     </div>
                     <span class="font-semibold">Node-Watch</span>
+                    <span class="text-gray-500 ml-3 text-sm">by Sovereign Suite</span>
                 </div>
                 <div class="flex items-center text-sm text-gray-400">
                     <div class="w-2 h-2 bg-green-500 rounded-full mr-2 animate-pulse"></div>
-                    Monitoring live servers since deployment
+                    <span id="footer-status">Checking...</span>
                 </div>
+            </div>
+            <div class="mt-4 text-center text-xs text-gray-600">
+                <a href="https://github.com/Repugrid/sovereign-suite" class="hover:text-gray-400">GitHub</a>
+                <span class="mx-2">|</span>
+                API: <a href="http://37.27.189.23:9081/docs" class="hover:text-gray-400">Documentation</a>
             </div>
         </div>
     </footer>
 
     <script>
-        // Initialize Feather icons
+        const API = 'http://37.27.189.23:9081';
+        let chart;
+
         feather.replace();
-        
-        // Copy to clipboard function
-        function copyToClipboard() {
-            const command = document.getElementById('install-command').textContent;
-            navigator.clipboard.writeText(command).then(() => {
-                // Show feedback
-                const button = event.target.closest('button');
-                const originalText = button.innerHTML;
-                button.innerHTML = '<i data-feather="check" class="w-4 h-4 inline mr-1"></i>Copied!';
-                feather.replace();
-                
-                setTimeout(() => {
-                    button.innerHTML = originalText;
-                    feather.replace();
-                }, 2000);
+
+        // --- Server Cards ---
+        async function loadServers() {
+            try {
+                const res = await fetch(`${API}/api/v1/servers`);
+                const data = await res.json();
+                const container = document.getElementById('server-cards');
+
+                document.getElementById('total-nodes').textContent = data.servers.length;
+                document.getElementById('hero-status').textContent =
+                    `Live — ${data.servers.length} node${data.servers.length !== 1 ? 's' : ''} reporting`;
+                document.getElementById('footer-status').textContent =
+                    `${data.servers.length} server${data.servers.length !== 1 ? 's' : ''} monitored`;
+
+                if (data.servers.length === 0) {
+                    container.innerHTML = `
+                        <div class="bg-gray-800 rounded-lg p-6 col-span-full text-center">
+                            <p class="text-gray-400">No servers reporting yet. Be the first!</p>
+                        </div>`;
+                    return;
+                }
+
+                let cards = '';
+                for (const srv of data.servers) {
+                    const statusRes = await fetch(`${API}/api/v1/servers/${srv.server_id}/status`);
+                    const status = await statusRes.json();
+
+                    const color = status.status === 'healthy' ? 'green' :
+                                  status.status === 'warning' ? 'yellow' : 'red';
+
+                    cards += `
+                        <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                            <div class="flex items-center justify-between mb-4">
+                                <div class="flex items-center">
+                                    <div class="w-3 h-3 bg-${color}-500 rounded-full mr-3 animate-pulse"></div>
+                                    <span class="font-semibold text-sm">${srv.hostname}</span>
+                                </div>
+                                <span class="text-xs px-2 py-1 rounded-full bg-${color}-900 text-${color}-300">
+                                    ${status.status}
+                                </span>
+                            </div>
+                            <div class="grid grid-cols-3 gap-3">
+                                <div>
+                                    <p class="text-xs text-gray-500 mb-1">CPU</p>
+                                    <p class="text-lg font-bold">${status.cpu_percent != null ? status.cpu_percent.toFixed(1) + '%' : '-'}</p>
+                                    <div class="w-full bg-gray-700 rounded-full h-1.5 mt-1">
+                                        <div class="bg-blue-500 h-1.5 rounded-full" style="width: ${status.cpu_percent || 0}%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 mb-1">RAM</p>
+                                    <p class="text-lg font-bold">${status.memory_percent != null ? status.memory_percent.toFixed(1) + '%' : '-'}</p>
+                                    <div class="w-full bg-gray-700 rounded-full h-1.5 mt-1">
+                                        <div class="bg-green-500 h-1.5 rounded-full" style="width: ${status.memory_percent || 0}%"></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <p class="text-xs text-gray-500 mb-1">Disk</p>
+                                    <p class="text-lg font-bold">${status.disk_percent != null ? status.disk_percent.toFixed(1) + '%' : '-'}</p>
+                                    <div class="w-full bg-gray-700 rounded-full h-1.5 mt-1">
+                                        <div class="bg-yellow-500 h-1.5 rounded-full" style="width: ${status.disk_percent || 0}%"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-3 text-xs text-gray-500">
+                                ID: ${srv.server_id.substring(0, 20)}...
+                            </div>
+                        </div>`;
+                }
+                container.innerHTML = cards;
+            } catch (err) {
+                document.getElementById('hero-status').textContent = 'API offline';
+                console.error('Server load error:', err);
+            }
+        }
+
+        // --- Metrics Chart ---
+        async function loadChart() {
+            try {
+                const srvRes = await fetch(`${API}/api/v1/servers`);
+                const srvData = await srvRes.json();
+                if (srvData.servers.length === 0) return;
+
+                const serverId = srvData.servers[0].server_id;
+                const res = await fetch(`${API}/api/v1/servers/${serverId}/metrics?hours=2`);
+                const data = await res.json();
+
+                document.getElementById('total-readings').textContent = data.count;
+                document.getElementById('uptime-pct').textContent = '100%';
+                document.getElementById('chart-update').textContent =
+                    `Updated ${new Date().toLocaleTimeString()}`;
+
+                const labels = data.metrics.map(m => {
+                    const d = new Date(m.timestamp);
+                    return d.getHours().toString().padStart(2,'0') + ':' +
+                           d.getMinutes().toString().padStart(2,'0');
+                });
+                const cpuData = data.metrics.map(m => m.cpu_percent);
+                const memData = data.metrics.map(m => m.memory_percent);
+
+                const ctx = document.getElementById('metricsChart').getContext('2d');
+
+                if (chart) chart.destroy();
+                chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels,
+                        datasets: [
+                            {
+                                label: 'CPU %',
+                                data: cpuData,
+                                borderColor: '#3b82f6',
+                                backgroundColor: 'rgba(59, 130, 246, 0.1)',
+                                fill: true,
+                                tension: 0.3,
+                                pointRadius: 0,
+                            },
+                            {
+                                label: 'Memory %',
+                                data: memData,
+                                borderColor: '#22c55e',
+                                backgroundColor: 'rgba(34, 197, 94, 0.1)',
+                                fill: true,
+                                tension: 0.3,
+                                pointRadius: 0,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        plugins: {
+                            legend: {
+                                labels: { color: '#9ca3af' }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: { color: '#6b7280', maxTicksLimit: 12 },
+                                grid: { color: 'rgba(75, 85, 99, 0.3)' }
+                            },
+                            y: {
+                                min: 0, max: 100,
+                                ticks: { color: '#6b7280', callback: v => v + '%' },
+                                grid: { color: 'rgba(75, 85, 99, 0.3)' }
+                            }
+                        }
+                    }
+                });
+            } catch (err) {
+                console.error('Chart error:', err);
+            }
+        }
+
+        // --- Copy ---
+        function copyInstall() {
+            const cmd = document.getElementById('install-cmd').textContent.trim();
+            navigator.clipboard.writeText(cmd).then(() => {
+                const btn = document.getElementById('copy-btn');
+                btn.textContent = 'Copied!';
+                setTimeout(() => btn.textContent = 'Copy', 2000);
             });
         }
-        
-        // Smooth scroll to install section
-        function scrollToInstall() {
-            document.getElementById('install').scrollIntoView({ 
-                behavior: 'smooth' 
-            });
-        }
+
+        // --- Init ---
+        loadServers();
+        loadChart();
+        setInterval(() => { loadServers(); loadChart(); }, 30000);
     </script>
 </body>
 </html>
